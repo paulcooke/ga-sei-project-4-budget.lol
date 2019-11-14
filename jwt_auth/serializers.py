@@ -27,7 +27,7 @@ class UserSerializer(serializers.ModelSerializer):
     accounts = AccountSerializer(many=True, required=False)
 
     def validate(self, data): # data is the data from the request
-        
+
         password = data.pop('password')
         password_confirmation = data.pop('password_confirmation')
 

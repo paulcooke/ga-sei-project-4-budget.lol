@@ -1,7 +1,7 @@
 # pylint: disable=no-member,arguments-differ
 from rest_framework import serializers
 from jwt_auth.serializers import NestedUserSerializer
-from .models import Account, WeeklyRecurringPaymentsOut
+from .models import Account, WeeklyRecurringPaymentsOut, MonthlyRecurringPaymentsOut
 # from django.apps import apps
 # apps.get_model('jwt_auth.User')
 
@@ -17,14 +17,20 @@ class NestedWeeklyRecurringPaymentsOutSerializer(serializers.ModelSerializer):
         model = WeeklyRecurringPaymentsOut
         fields = ('id', 'name', 'category', 'amount', 'day_of_week')
 
+class NestedMonthlyRecurringPaymentsOutSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = MonthlyRecurringPaymentsOut
+        fields = ('id', 'name', 'category', 'amount', 'date_in_month')
+
 class AccountSerializer(serializers.ModelSerializer):
 
     weekly_recurring_out = NestedWeeklyRecurringPaymentsOutSerializer(many=True, required=False)
-    # if adding back in remember to add back to list below
+    monthly_recurring_out = NestedMonthlyRecurringPaymentsOutSerializer(many=True, required=False)
 
     class Meta:
         model = Account
-        fields = ('id', 'user', 'name', 'bank', 'description', 'min_headroom', 'current_balance', 'weekly_recurring_out')
+        fields = ('id', 'user', 'name', 'bank', 'description', 'min_headroom', 'current_balance', 'weekly_recurring_out', 'monthly_recurring_out')
         extra_kwargs = {'user': {'required': False}, 'bank': {'required': False}, 'description': {'required': False}}
 
 class PopulatedAccountSerializer(AccountSerializer):
@@ -36,6 +42,13 @@ class WeeklyRecurringPaymentsOutSerializer(serializers.ModelSerializer):
     class Meta:
         model = WeeklyRecurringPaymentsOut
         fields = ('id', 'account', 'name', 'category', 'amount', 'day_of_week')
+        extra_kwargs = {'account': {'required': False}}
+
+class MonthlyRecurringPaymentsOutSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = MonthlyRecurringPaymentsOut
+        fields = ('id', 'account', 'name', 'category', 'amount', 'date_in_month')
         extra_kwargs = {'account': {'required': False}}
 
 
