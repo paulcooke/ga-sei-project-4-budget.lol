@@ -30,7 +30,7 @@ class WeeklyRecurringPaymentsOut(models.Model):
     name = models.CharField(max_length=50, blank=True)
     category = models.CharField(max_length=50, blank=True)
     amount = models.FloatField(null=True) # make required in final version...
-    day_of_week = models.DateField(null=True)
+    day_of_week = models.CharField(max_length=50, blank=True, default='hello world')
 
     def __str__(self):
         return self.name
