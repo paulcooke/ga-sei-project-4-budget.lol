@@ -11,19 +11,30 @@ class NestedAccountSerializer(serializers.ModelSerializer):
         model = Account
         fields = ('id', 'name', 'bank')
 
+class NestedWeeklyRecurringPaymentsOutSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = WeeklyRecurringPaymentsOut
+        fields = ('id', 'name', 'category', 'amount', 'day_of_week')
+
 class AccountSerializer(serializers.ModelSerializer):
 
-    user = NestedUserSerializer()
+    weekly_recurring_out = NestedWeeklyRecurringPaymentsOutSerializer(many=True)
+    # if adding back in remember to add back to list below
 
     class Meta:
         model = Account
-        fields = ('id', 'user', 'name', 'bank', 'description', 'min_headroom')
+        fields = ('id', 'user', 'name', 'bank', 'description', 'min_headroom', 'current_balance', 'weekly_recurring_out')
+
+class PopulatedAccountSerializer(AccountSerializer):
+
+    user = NestedUserSerializer()
 
 class WeeklyRecurringPaymentsOutSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = WeeklyRecurringPaymentsOut
-        fields = ('id', 'account', 'name', 'category', 'amount')
+        fields = ('id', 'account', 'name', 'category', 'amount', 'day_of_week')
 
 
 

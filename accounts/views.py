@@ -5,7 +5,7 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 from rest_framework import permissions
 from rest_framework.response import Response
 from .models import Account, WeeklyRecurringPaymentsOut
-from .serializers import AccountSerializer, WeeklyRecurringPaymentsOutSerializer
+from .serializers import AccountSerializer, PopulatedAccountSerializer, WeeklyRecurringPaymentsOutSerializer
 # from jwt_auth.models import User
 
 # Create your views here.
@@ -14,12 +14,10 @@ from .serializers import AccountSerializer, WeeklyRecurringPaymentsOutSerializer
 class AccountListView(APIView):
     permission_classes = (permissions.IsAuthenticated, )
     # ******* perhaps can just filter in teh get request rather than use permissions?
-    
-    
-    
+
     def get(self, _request):
-        accounts = Account.objects.all()
-        serialized_accounts = AccountSerializer(accounts, many=True)
+        accounts = self.request.user.accounts.all()
+        serialized_accounts = PopulatedAccountSerializer(accounts, many=True)
         return Response(serialized_accounts.data)
         
     def post(self, request):
@@ -36,13 +34,15 @@ class WeeklyRecurringPaymentsOutListView(ListCreateAPIView):
     serializer_class = WeeklyRecurringPaymentsOutSerializer
     # queryset = WeeklyRecurringPaymentsOut.objects.all()
 
+    def get_queryset(self):
+        return self.request.user
+        
 
 
 
-
-# class CurrentAccountDetailView(RetrieveUpdateDestroyAPIView):
+# class CAccountDetailView(RetrieveUpdateDestroyAPIView):
 #     permission_classes = (IsAuthenticatedOrReadOnly, )
-#     queryset = CurrentAccount.objects.all()
+#     queryset = Account.objects.all()
 #     #serializer_class = StationSerializer
 
 # class LineListView(ListAPIView):
