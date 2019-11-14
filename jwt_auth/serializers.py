@@ -3,7 +3,16 @@ from django.contrib.auth import get_user_model # not User anymore as we've exten
 import django.contrib.auth.password_validation as validations
 from django.contrib.auth.hashers import make_password
 from django.core.exceptions import ValidationError
+from django.apps import apps
 User = get_user_model()
+Account = apps.get_model('accounts', 'Account')
+
+# this serializer is the same of the nested serializer in account.serializers. the app is imported above to avoid a circular app reference.
+class AccountSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Account
+        fields = ('id', 'name', 'bank')
 
 class NestedUserSerializer(serializers.ModelSerializer):
 
@@ -15,6 +24,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     password = serializers.CharField(write_only=True) # stops password being readable
     password_confirmation = serializers.CharField(write_only=True)
+    accounts = AccountSerializer(many=True, required=False)
 
     def validate(self, data): # data is the data from the request
         
@@ -33,8 +43,7 @@ class UserSerializer(serializers.ModelSerializer):
         return data # return the data with the freshly hashed password
 
     class Meta:
-        model = User
-        fields = ('id', 'username', 'email', 'password', 'password_confirmation', 'profile_image', 'email', 'salary', 'current_account') # django will not be able to send the password and password_confirmation fields out as they are write only, so they can't be read
-        extra_kwargs = {'current_account': {'required': False}}
 
-    
+        model = User
+        fields = ('id', 'username', 'email', 'password', 'password_confirmation', 'profile_image', 'email', 'salary', 'accounts') # django will not be able to send the password and password_confirmation fields out as they are write only, so they can't be read
+        extra_kwargs = {'accounts': {'required': False}}

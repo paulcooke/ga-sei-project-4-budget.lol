@@ -4,35 +4,27 @@ from rest_framework.views import APIView
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework import permissions
 from rest_framework.response import Response
-from .models import CurrentAccount, WeeklyRecurringPaymentsOut
-from .serializers import CurrentAccountSerializer, PopulatedCurrentAccount, WeeklyRecurringPaymentsOutSerializer
+from .models import Account, WeeklyRecurringPaymentsOut
+from .serializers import AccountSerializer, WeeklyRecurringPaymentsOutSerializer
 # from jwt_auth.models import User
 
 # Create your views here.
-class IsAccountOwner(permissions.BasePermission):
 
-    # def has_permission(self, request, view):
-    #     if request.user.id == User.id:
-    #         return True
-    #     return False
 
-    def has_object_permission(self, request, view, current_account_obj):
-        return current_account_obj.owner.id == request.user.id
-
-    # def has_view_permission(self, request, view):
-    #     return request and request.user.is_authenticated
-
-class CurrentAccountListView(APIView):
-    permission_classes = (permissions.IsAuthenticated, IsAccountOwner)
-
+class AccountListView(APIView):
+    permission_classes = (permissions.IsAuthenticated, )
+    # ******* perhaps can just filter in teh get request rather than use permissions?
+    
+    
+    
     def get(self, _request):
-        accounts = CurrentAccount.objects.all()
-        serialized_accounts = PopulatedCurrentAccount(accounts, many=True)
+        accounts = Account.objects.all()
+        serialized_accounts = AccountSerializer(accounts, many=True)
         return Response(serialized_accounts.data)
         
     def post(self, request):
         request.data['user'] = request.user.id
-        serializer = CurrentAccountSerializer(data=request.data)
+        serializer = AccountSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=201)
@@ -41,8 +33,10 @@ class CurrentAccountListView(APIView):
 
 class WeeklyRecurringPaymentsOutListView(ListCreateAPIView):
     permission_classes = (permissions.IsAuthenticated, )
-    queryset = WeeklyRecurringPaymentsOut.objects.all()
     serializer_class = WeeklyRecurringPaymentsOutSerializer
+    # queryset = WeeklyRecurringPaymentsOut.objects.all()
+
+
 
 
 

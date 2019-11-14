@@ -1,8 +1,8 @@
 from django.urls import path
-from .views import CurrentAccountListView
+from .views import AccountListView
 
 urlpatterns = [
-    path('accounts', CurrentAccountListView.as_view()),
-    #path('accounts/<int:pk>', CurrentAccountDetailView.as_view()),
-    
+    path('accounts', AccountListView.as_view()),
+    #path('accounts/<int:pk>', AccountDetailView.as_view()),
+
 ]

@@ -1,25 +1,23 @@
 # pylint: disable=no-member,arguments-differ
 from rest_framework import serializers
 from jwt_auth.serializers import NestedUserSerializer
-from .models import CurrentAccount, WeeklyRecurringPaymentsOut
+from .models import Account, WeeklyRecurringPaymentsOut
 # from django.apps import apps
 # apps.get_model('jwt_auth.User')
 
-class NestedCurrentAccountSerializer(serializers.ModelSerializer):
+class NestedAccountSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = CurrentAccount
+        model = Account
         fields = ('id', 'name', 'bank')
 
-class CurrentAccountSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = CurrentAccount
-        fields = ('id', 'user', 'name', 'bank', 'description', 'min_headroom')
-
-class PopulatedCurrentAccount(CurrentAccountSerializer):
+class AccountSerializer(serializers.ModelSerializer):
 
     user = NestedUserSerializer()
+
+    class Meta:
+        model = Account
+        fields = ('id', 'user', 'name', 'bank', 'description', 'min_headroom')
 
 class WeeklyRecurringPaymentsOutSerializer(serializers.ModelSerializer):
 

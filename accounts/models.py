@@ -4,25 +4,26 @@ User = get_user_model()
 
 # Create your models here.
 
-class CurrentAccount(models.Model):
+# One account class, current/savings/etc are entered in the 'account_type' field
+class Account(models.Model):
     user = models.ForeignKey(
         User,
-        related_name='current_account',
+        related_name='accounts',
         on_delete=models.DO_NOTHING,
     )
     name = models.CharField(max_length=50)
+    account_type = models.CharField(max_length=50, default='current')
     bank = models.CharField(max_length=50)
     description = models.CharField(max_length=500)
     min_headroom = models.FloatField(null=True)
+    current_balance = models.FloatField(null=True) # not required as you'd make account first then add a first balance
 
     def __str__(self):
         return self.name
 
-# ******* should currrent account just be account and have an account type field? ********
-
 class WeeklyRecurringPaymentsOut(models.Model):
     account = models.ForeignKey(
-        CurrentAccount,
+        Account,
         related_name='weekly_recurring_out',
         on_delete=models.DO_NOTHING,
     )
