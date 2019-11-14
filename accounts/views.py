@@ -29,15 +29,22 @@ class AccountListView(APIView):
 
         return Response(serializer.errors, status=422)
 
+class AccountDetailView(RetrieveUpdateDestroyAPIView):
+    permission_classes = (permissions.IsAuthenticated, )
+    serializer_class = AccountSerializer
+    queryset = Account.objects.all()
+
 class WeeklyRecurringPaymentsOutListView(ListCreateAPIView):
     permission_classes = (permissions.IsAuthenticated, )
     serializer_class = WeeklyRecurringPaymentsOutSerializer
-    # queryset = WeeklyRecurringPaymentsOut.objects.all()
+    queryset = WeeklyRecurringPaymentsOut.objects.all()
 
-    def get_queryset(self):
-        return self.request.user
-        
-
+class WeeklyRecurringPaymentsOutDetailView(RetrieveUpdateDestroyAPIView):
+    permission_classes = (permissions.IsAuthenticated, )
+    serializer_class = WeeklyRecurringPaymentsOutSerializer
+    
+    def queryset(self):
+        return self.request.user.accounts.all()
 
 
 # class CAccountDetailView(RetrieveUpdateDestroyAPIView):
