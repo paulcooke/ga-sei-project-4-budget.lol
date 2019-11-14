@@ -5,6 +5,12 @@ from django.contrib.auth.hashers import make_password
 from django.core.exceptions import ValidationError
 User = get_user_model()
 
+class NestedUserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ('id', 'username')
+
 class UserSerializer(serializers.ModelSerializer):
 
     password = serializers.CharField(write_only=True) # stops password being readable
@@ -28,4 +34,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password', 'password_confirmation', 'profile_image', 'email', 'salary') # django will not be able to send the password and password_confirmation fields out as they are write only, so they can't be read
+        fields = ('id', 'username', 'email', 'password', 'password_confirmation', 'profile_image', 'email', 'salary', 'current_account') # django will not be able to send the password and password_confirmation fields out as they are write only, so they can't be read
+        extra_kwargs = {'current_account': {'required': False}}
+
+    

@@ -36,3 +36,10 @@ class LoginView(APIView):
 
         token = jwt.encode({'sub': user.id}, settings.SECRET_KEY, algorithm='HS256')
         return Response({'token': token, 'message': f'Welcome back {user.username}'})
+
+class UserView(APIView):
+
+    def get(self, request):
+        user = User.objects.get(pk=request.user.id)
+        serialized_user = UserSerializer(user)
+        return Response(serialized_user.data)
