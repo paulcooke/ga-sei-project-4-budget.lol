@@ -1,7 +1,7 @@
 # pylint: disable=no-member,arguments-differ
 from rest_framework import serializers
 from jwt_auth.serializers import NestedUserSerializer
-from .models import Account, WeeklyRecurringPaymentsOut, MonthlyRecurringPaymentsOut
+from .models import Account, WeeklyRecurringPaymentsOut, MonthlyRecurringPaymentsOut, YearlyRecurringPaymentsOut
 # from django.apps import apps
 # apps.get_model('jwt_auth.User')
 
@@ -23,10 +23,17 @@ class NestedMonthlyRecurringPaymentsOutSerializer(serializers.ModelSerializer):
         model = MonthlyRecurringPaymentsOut
         fields = ('id', 'name', 'category', 'amount', 'date_in_month')
 
+class NestedYearlyRecurringPaymentsOutSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = YearlyRecurringPaymentsOut
+        fields = ('id', 'name', 'category', 'amount', 'payment_date')
+
 class AccountSerializer(serializers.ModelSerializer):
 
     weekly_recurring_out = NestedWeeklyRecurringPaymentsOutSerializer(many=True, required=False)
     monthly_recurring_out = NestedMonthlyRecurringPaymentsOutSerializer(many=True, required=False)
+    
 
     class Meta:
         model = Account
@@ -51,7 +58,12 @@ class MonthlyRecurringPaymentsOutSerializer(serializers.ModelSerializer):
         fields = ('id', 'account', 'name', 'category', 'amount', 'date_in_month')
         extra_kwargs = {'account': {'required': False}}
 
+class YearlyRecurringPaymentsOutSerializer(serializers.ModelSerializer):
 
+    class Meta:
+        model = YearlyRecurringPaymentsOut
+        fields = ('id', 'account', 'name', 'category', 'amount', 'payment_date')
+        extra_kwargs = {'account': {'required': False}}
 
 
 

@@ -53,17 +53,3 @@ class MonthlyRecurringPaymentsOutDetailView(RetrieveUpdateDestroyAPIView):
     permission_classes = (permissions.IsAuthenticated, )
     serializer_class = MonthlyRecurringPaymentsOutSerializer
     queryset = MonthlyRecurringPaymentsOut.objects.all()
-
-
-# class CAccountDetailView(RetrieveUpdateDestroyAPIView):
-#     permission_classes = (IsAuthenticatedOrReadOnly, )
-#     queryset = Account.objects.all()
-#     #serializer_class = StationSerializer
-
-# class LineListView(ListAPIView):
-#     queryset = Line.objects.all()
-#     serializer_class = LineSerializer
-
-# class LineDetailView(RetrieveAPIView):
-#     queryset = Line.objects.all()
-#     serializer_class = LineSerializer

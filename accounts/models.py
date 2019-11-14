@@ -52,3 +52,18 @@ class MonthlyRecurringPaymentsOut(models.Model):
 
     def __str__(self):
         return self.name
+
+class YearlyRecurringPaymentsOut(models.Model):
+    account = models.ForeignKey(
+        Account,
+        related_name='yearly_recurring_out',
+        on_delete=models.DO_NOTHING,
+    )
+    name = models.CharField(max_length=50, blank=True)
+    category = models.CharField(max_length=50, blank=True)
+    amount = models.FloatField(null=True) # make required in final version...
+    payment_date = models.DateField(null=True)
+
+    def __str__(self):
+        return self.name
+        
