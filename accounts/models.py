@@ -16,54 +16,28 @@ class Account(models.Model):
     bank = models.CharField(max_length=50)
     description = models.CharField(max_length=500)
     min_headroom = models.FloatField(null=True)
-    current_balance = models.FloatField(null=True) # not required as you'd make account first then add a first balance
+    current_balance = models.FloatField(null=True) # should be required?
+    is_main_account = models.BooleanField(null=True)
 
     def __str__(self):
         return self.name
 
-# below are all the models for the different types of payment that can be made:
-# weekly recurring out, monthly recurring out, yearly recurring out, one off out
-# weekly recurring in, monthly recurring in, one off in
-
-class WeeklyRecurringPaymentsOut(models.Model):
+# originally there were multiple models for transactions, but ultimately it was simpler and cleaner to combine them into one
+class FutureTransactions(models.Model):
     account = models.ForeignKey(
         Account,
-        related_name='weekly_recurring_out',
+        related_name='future_transactions',
         on_delete=models.CASCADE,
     )
-    name = models.CharField(max_length=50, blank=True)
+    transaction_is_debit = models.BooleanField()
+    name = models.CharField(max_length=50)
     category = models.CharField(max_length=50, blank=True)
-    amount = models.FloatField(null=True) # make required in final version...
-    day_of_week = models.CharField(max_length=50, blank=True, default='hello world')
+    amount = models.FloatField() # make required in final version...
+    recurrance = models.CharField(max_length=50) # will be a drop down containing 'yearly, monthly, weekly, one-off'. could possibly add things like daily or 'weekdays' in the future
+    day_of_week = models.CharField(max_length=50, blank=True) # for weekly transactions
+    date_in_month = models.IntegerField(null=True) # for monthly transactions
+    annual_date = models.DateField(null=True) # for yearly transactions
+    one_off_date = models.DateField(null=True) # for one off transactions
 
     def __str__(self):
         return self.name
-
-class MonthlyRecurringPaymentsOut(models.Model):
-    account = models.ForeignKey(
-        Account,
-        related_name='monthly_recurring_out',
-        on_delete=models.DO_NOTHING,
-    )
-    name = models.CharField(max_length=50, blank=True)
-    category = models.CharField(max_length=50, blank=True)
-    amount = models.FloatField(null=True) # make required in final version...
-    date_in_month = models.IntegerField(null=True)
-
-    def __str__(self):
-        return self.name
-
-class YearlyRecurringPaymentsOut(models.Model):
-    account = models.ForeignKey(
-        Account,
-        related_name='yearly_recurring_out',
-        on_delete=models.DO_NOTHING,
-    )
-    name = models.CharField(max_length=50, blank=True)
-    category = models.CharField(max_length=50, blank=True)
-    amount = models.FloatField(null=True) # make required in final version...
-    payment_date = models.DateField(null=True)
-
-    def __str__(self):
-        return self.name
-        

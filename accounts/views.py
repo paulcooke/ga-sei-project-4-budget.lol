@@ -4,8 +4,8 @@ from rest_framework.views import APIView
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework import permissions
 from rest_framework.response import Response
-from .models import Account, WeeklyRecurringPaymentsOut, MonthlyRecurringPaymentsOut
-from .serializers import AccountSerializer, PopulatedAccountSerializer, WeeklyRecurringPaymentsOutSerializer, MonthlyRecurringPaymentsOutSerializer
+from .models import Account, FutureTransactions
+from .serializers import AccountSerializer, PopulatedAccountSerializer, FutureTransactionSerializer
 # from jwt_auth.models import User
 
 # Create your views here.
@@ -13,7 +13,6 @@ from .serializers import AccountSerializer, PopulatedAccountSerializer, WeeklyRe
 
 class AccountListView(APIView):
     permission_classes = (permissions.IsAuthenticated, )
-    # ******* perhaps can just filter in teh get request rather than use permissions?
 
     def get(self, _request):
         accounts = self.request.user.accounts.all()
@@ -34,22 +33,28 @@ class AccountDetailView(RetrieveUpdateDestroyAPIView):
     serializer_class = AccountSerializer
     queryset = Account.objects.all()
 
-class WeeklyRecurringPaymentsOutListView(ListCreateAPIView):
+class FutureTransactionsListView(APIView):
     permission_classes = (permissions.IsAuthenticated, )
-    serializer_class = WeeklyRecurringPaymentsOutSerializer
-    queryset = WeeklyRecurringPaymentsOut.objects.all()
 
-class WeeklyRecurringPaymentsOutDetailView(RetrieveUpdateDestroyAPIView):
-    permission_classes = (permissions.IsAuthenticated, )
-    serializer_class = WeeklyRecurringPaymentsOutSerializer
-    queryset = WeeklyRecurringPaymentsOut.objects.all()
+# dont think get is needed for future transactions
+    def get(self, _request):
+        future_transactions = FutureTransactions.objects.all()
+        serialized_future_transactions = FutureTransactionSerializer(future_transactions, many=True)
+        return Response(serialized_future_transactions.data)
 
-class MonthlyRecurringPaymentsOutListView(ListCreateAPIView):
-    permission_classes = (permissions.IsAuthenticated, )
-    serializer_class = MonthlyRecurringPaymentsOutSerializer
-    queryset = MonthlyRecurringPaymentsOut.objects.all()
+# here's a non-generics one, thinl generics might be ok
+    def post(self, request, pk):
+        request.data['user'] = request.user.id
+        request.data['account'] = pk
+        transaction = FutureTransactionSerializer(data=request.data)
+        if transaction.is_valid():
+            transaction.save()
+            account = Account.objects.get(pk=pk)
+            serialized_account = PopulatedAccountSerializer(account)
+            return Response(serialized_account.data, status=201)
+        return Response(transaction.errors, status=422)
 
-class MonthlyRecurringPaymentsOutDetailView(RetrieveUpdateDestroyAPIView):
+class FutureTransactionsDetailView(RetrieveUpdateDestroyAPIView):
     permission_classes = (permissions.IsAuthenticated, )
-    serializer_class = MonthlyRecurringPaymentsOutSerializer
-    queryset = MonthlyRecurringPaymentsOut.objects.all()
+    serializer_class = FutureTransactionSerializer
+    queryset = FutureTransactions.objects.all()

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Account, WeeklyRecurringPaymentsOut
+from .models import Account, FutureTransactions
 # Register your models here.
 admin.site.register(Account)
-admin.site.register(WeeklyRecurringPaymentsOut)
+admin.site.register(FutureTransactions)
