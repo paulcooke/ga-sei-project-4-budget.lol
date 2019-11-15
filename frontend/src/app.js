@@ -2,11 +2,15 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
+// import auth
+
 import 'bulma'
 import './styles/style.scss'
 
 import Home from './components/common/Home'
 import Navbar from './components/common/Navbar'
+
+import Dashboard from './components/finances/Dashboard'
 
 const App = () => (
   <BrowserRouter>
@@ -14,6 +18,7 @@ const App = () => (
       <Navbar />
       <Switch>
         <Route exact path="/" component={Home}/>
+        <Route path="/dashboard" component={Dashboard}/>
       </Switch>
     </main>
   </BrowserRouter>
