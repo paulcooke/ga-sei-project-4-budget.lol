@@ -35,9 +35,9 @@ class FutureTransactions(models.Model):
     amount = models.FloatField() # make required in final version...
     recurrance = models.CharField(max_length=50) # will be a drop down containing 'yearly, monthly, weekly, one-off'. could possibly add things like daily or 'weekdays' in the future
     day_of_week = models.CharField(max_length=50, blank=True) # for weekly transactions
-    date_in_month = models.IntegerField(null=True) # for monthly transactions
-    annual_date = models.DateField(null=True) # for yearly transactions
-    one_off_date = models.DateField(null=True) # for one off transactions
+    date_in_month = models.IntegerField(blank=True) # for monthly transactions
+    annual_date = models.DateField(blank=True) # for yearly transactions
+    one_off_date = models.DateField(blank=True) # for one off transactions
 
     def __str__(self):
         return self.name

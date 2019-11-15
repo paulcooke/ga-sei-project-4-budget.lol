@@ -12,7 +12,7 @@ from .serializers import AccountSerializer, PopulatedAccountSerializer, FutureTr
 
 
 class AccountListView(APIView):
-    permission_classes = (permissions.IsAuthenticated, )
+    # permission_classes = (permissions.IsAuthenticated, )
 
     def get(self, _request):
         accounts = self.request.user.accounts.all()
@@ -36,11 +36,11 @@ class AccountDetailView(RetrieveUpdateDestroyAPIView):
 class FutureTransactionsListView(APIView):
     permission_classes = (permissions.IsAuthenticated, )
 
-# dont think get is needed for future transactions
-    def get(self, _request):
-        future_transactions = FutureTransactions.objects.all()
-        serialized_future_transactions = FutureTransactionSerializer(future_transactions, many=True)
-        return Response(serialized_future_transactions.data)
+# dont think get is needed for future transactions, written as below it doesnt work as it says it's beeen given an unexpected keyword argument pk
+    # def get(self, _request):
+    #     future_transactions = FutureTransactions.objects.get()
+    #     serialized_future_transactions = FutureTransactionSerializer(future_transactions, many=True)
+    #     return Response(serialized_future_transactions.data)
 
 # here's a non-generics one, thinl generics might be ok
     def post(self, request, pk):

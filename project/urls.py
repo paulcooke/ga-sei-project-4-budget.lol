@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', include('rest_framework.urls')),
     path('api/', include('jwt_auth.urls')),
     path('api/', include('accounts.urls')),
+    path('', include('frontend.urls')),
 ]
