@@ -6,10 +6,12 @@ import 'bulma'
 import './styles/style.scss'
 
 import Home from './components/common/Home'
+import Navbar from './components/common/Navbar'
 
 const App = () => (
   <BrowserRouter>
     <main>
+      <Navbar />
       <Switch>
         <Route exact path="/" component={Home}/>
       </Switch>
