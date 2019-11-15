@@ -9,7 +9,8 @@ import './styles/style.scss'
 
 import Home from './components/common/Home'
 import Navbar from './components/common/Navbar'
-
+import Register from './components/auth/Register'
+import Login from './components/auth/Login'
 import Dashboard from './components/finances/Dashboard'
 
 const App = () => (
@@ -19,6 +20,8 @@ const App = () => (
       <Switch>
         <Route exact path="/" component={Home}/>
         <Route path="/dashboard" component={Dashboard}/>
+        <Route path="/register" component={Register}/>
+        <Route path="/login" component={Login}/>
       </Switch>
     </main>
   </BrowserRouter>

@@ -45,5 +45,5 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
 
         model = User
-        fields = ('id', 'username', 'email', 'password', 'password_confirmation', 'profile_image', 'email', 'salary', 'accounts') # django will not be able to send the password and password_confirmation fields out as they are write only, so they can't be read
+        fields = ('id', 'username', 'email', 'password', 'password_confirmation', 'profile_image', 'salary', 'accounts') # django will not be able to send the password and password_confirmation fields out as they are write only, so they can't be read
         extra_kwargs = {'accounts': {'required': False}}
