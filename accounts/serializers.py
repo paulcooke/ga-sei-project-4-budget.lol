@@ -24,7 +24,7 @@ class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
         fields = ('id', 'user', 'name', 'bank', 'description', 'min_headroom', 'current_balance', 'future_transactions')
-        extra_kwargs = {'user': {'required': False}, 'bank': {'required': False}, 'description': {'required': False}}
+        extra_kwargs = {'user': {'required': False}}
 
 class PopulatedAccountSerializer(AccountSerializer):
 
@@ -35,4 +35,4 @@ class FutureTransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = FutureTransactions
         fields = ('account', 'id', 'name', 'category', 'transaction_is_debit', 'amount', 'recurrance', 'day_of_week', 'date_in_month', 'annual_date', 'one_off_date')
-        extra_kwargs = {'account': {'required': False}, 'transaction_is_debit': {'required': False}, 'recurrance': {'required': False}}
+        extra_kwargs = {'account': {'required': False}}

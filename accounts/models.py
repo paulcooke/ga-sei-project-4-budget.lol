@@ -12,11 +12,12 @@ class Account(models.Model):
         on_delete=models.CASCADE,
     )
     name = models.CharField(max_length=50)
-    account_type = models.CharField(max_length=50, default='current')
-    bank = models.CharField(max_length=50)
-    description = models.CharField(max_length=500)
-    min_headroom = models.FloatField(null=True)
+    account_type = models.CharField(max_length=50)
+    bank = models.CharField(max_length=50, blank=True)
+    description = models.CharField(max_length=500, blank=True)
+    min_headroom = models.FloatField(blank=True, default=0)
     current_balance = models.FloatField(null=True) # should be required?
+    last_balance_update = models.DateField(null=True, blank=True)
     is_main_account = models.BooleanField(null=True)
 
     def __str__(self):
@@ -35,9 +36,9 @@ class FutureTransactions(models.Model):
     amount = models.FloatField() # make required in final version...
     recurrance = models.CharField(max_length=50) # will be a drop down containing 'yearly, monthly, weekly, one-off'. could possibly add things like daily or 'weekdays' in the future
     day_of_week = models.CharField(max_length=50, blank=True) # for weekly transactions
-    date_in_month = models.IntegerField(blank=True) # for monthly transactions
-    annual_date = models.DateField(blank=True) # for yearly transactions
-    one_off_date = models.DateField(blank=True) # for one off transactions
+    date_in_month = models.IntegerField(null=True) # for monthly transactions
+    annual_date = models.DateField(null=True, blank=True) # for yearly transactions
+    one_off_date = models.DateField(null=True, blank=True) # for one off transactions
 
     def __str__(self):
         return self.name
