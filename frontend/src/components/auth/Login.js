@@ -23,6 +23,11 @@ class Login extends React.Component {
     e.preventDefault()
     axios.post('/api/login', this.state.data)
       .then(res => {
+        console.log(res)
+        
+        const parts = res.data.token.split('.')
+        console.log('checking res',JSON.parse(atob(parts[1])))
+                
         Auth.setToken(res.data.token)
         this.props.history.push('/dashboard')
       })

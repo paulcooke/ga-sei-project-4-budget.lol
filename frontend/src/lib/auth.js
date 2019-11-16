@@ -22,6 +22,7 @@ class Auth {
     if (!token) return false
     const parts = token.split('.')
     if (parts.length < 3) return false
+    console.log(JSON.parse(atob(parts[1])))
     return JSON.parse(atob(parts[1]))
   }
 
