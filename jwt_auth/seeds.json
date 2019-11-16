@@ -1,0 +1,62 @@
+[
+{
+  "model": "jwt_auth.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$150000$0tQyII8WRffg$TttFt8uSGGR6OYrijK8OmHcNa3N00LmpdzE7BRT/1Wo=",
+    "last_login": "2019-11-16T16:35:26.154Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2019-11-16T16:35:07.568Z",
+    "profile_image": "",
+    "email": "admin@email.com",
+    "salary": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "jwt_auth.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$150000$KoMM8F0Ytfu9$OSB5NRQEck5HZrAn294KGa5sueRy8wvH7DVDxM1+5OM=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "paul",
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2019-11-16T16:35:48.294Z",
+    "profile_image": "",
+    "email": "paul@email.com",
+    "salary": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "jwt_auth.user",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$150000$MP5c9n0dR0Lz$OfugPe9/1JXichG2NJvgX51/yOKjWTfGHRA1CpXyrnc=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "moni",
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2019-11-16T16:48:36.451Z",
+    "profile_image": "",
+    "email": "moni@email.com",
+    "salary": null,
+    "groups": [],
+    "user_permissions": []
+  }
+}
+]

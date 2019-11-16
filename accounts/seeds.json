@@ -1,0 +1,128 @@
+[
+{
+  "model": "accounts.account",
+  "pk": 6,
+  "fields": {
+    "user": 2,
+    "name": "main test account",
+    "account_type": "",
+    "bank": "banco del mundo",
+    "description": "an account to practise on",
+    "min_headroom": 100.0,
+    "current_balance": 1000.0,
+    "last_balance_update": null,
+    "is_main_account": null
+  }
+},
+{
+  "model": "accounts.account",
+  "pk": 7,
+  "fields": {
+    "user": 3,
+    "name": "moni's test account",
+    "account_type": "",
+    "bank": "bank of cats",
+    "description": "an account to practise on",
+    "min_headroom": 0.0,
+    "current_balance": 5500.0,
+    "last_balance_update": null,
+    "is_main_account": null
+  }
+},
+{
+  "model": "accounts.futuretransactions",
+  "pk": 1,
+  "fields": {
+    "account": 6,
+    "transaction_is_debit": true,
+    "name": "rent",
+    "category": "accomodation",
+    "amount": 750.0,
+    "recurrance": "monthly",
+    "day_of_week": "",
+    "date_in_month": 12,
+    "annual_date": null,
+    "one_off_date": null
+  }
+},
+{
+  "model": "accounts.futuretransactions",
+  "pk": 2,
+  "fields": {
+    "account": 6,
+    "transaction_is_debit": true,
+    "name": "groceries",
+    "category": "food",
+    "amount": 50.0,
+    "recurrance": "weekly",
+    "day_of_week": "Sunday",
+    "date_in_month": null,
+    "annual_date": null,
+    "one_off_date": null
+  }
+},
+{
+  "model": "accounts.futuretransactions",
+  "pk": 3,
+  "fields": {
+    "account": 6,
+    "transaction_is_debit": true,
+    "name": "travel card",
+    "category": "travel",
+    "amount": 50.0,
+    "recurrance": "weekly",
+    "day_of_week": "Monday",
+    "date_in_month": null,
+    "annual_date": null,
+    "one_off_date": null
+  }
+},
+{
+  "model": "accounts.futuretransactions",
+  "pk": 4,
+  "fields": {
+    "account": 6,
+    "transaction_is_debit": true,
+    "name": "lunch",
+    "category": "food",
+    "amount": 25.0,
+    "recurrance": "weekly",
+    "day_of_week": "Monday",
+    "date_in_month": null,
+    "annual_date": null,
+    "one_off_date": null
+  }
+},
+{
+  "model": "accounts.futuretransactions",
+  "pk": 5,
+  "fields": {
+    "account": 6,
+    "transaction_is_debit": true,
+    "name": "council tax",
+    "category": "utilities",
+    "amount": 125.0,
+    "recurrance": "monthly",
+    "day_of_week": "2",
+    "date_in_month": null,
+    "annual_date": null,
+    "one_off_date": null
+  }
+},
+{
+  "model": "accounts.futuretransactions",
+  "pk": 7,
+  "fields": {
+    "account": 7,
+    "transaction_is_debit": true,
+    "name": "council tax",
+    "category": "utilities",
+    "amount": 105.0,
+    "recurrance": "monthly",
+    "day_of_week": "2",
+    "date_in_month": null,
+    "annual_date": null,
+    "one_off_date": null
+  }
+}
+]
