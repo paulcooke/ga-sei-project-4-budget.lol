@@ -33,65 +33,69 @@ class Register extends React.Component {
     const { errors } = this.state
     return (
       <section className="section">
-        <div className="container">
-          <form onSubmit={this.handleSubmit}>
-            <h2 className="title">Register</h2>
-            <div className="field">
-              <label className="label">Username</label>
-              <div className="control">
-                <input 
-                  className={`input ${errors.username ? 'is-danger' : ''}`}
-                  name="username"
-                  placeholder="Username"
-                  onChange={this.handleChange}
-                />
-              </div>
-              {errors.username && <small className="help is-danger">{errors.username}</small>}
-            </div>
+        <div className="columns is-centered">
+          <div className="column is-half">
+            <div className="container">
+              <form onSubmit={this.handleSubmit}>
+                <h2 className="title">Register</h2>
+                <div className="field">
+                  <label className="label">Username</label>
+                  <div className="control">
+                    <input 
+                      className={`input ${errors.username ? 'is-danger' : ''}`}
+                      name="username"
+                      placeholder="Username"
+                      onChange={this.handleChange}
+                    />
+                  </div>
+                  {errors.username && <small className="help is-danger">{errors.username}</small>}
+                </div>
 
-            <div className="field">
-              <label className="label">Email</label>
-              <div className="control">
-                <input 
-                  className={`input ${errors.email ? 'is-danger' : ''}`}
-                  name="email"
-                  placeholder="Email"
-                  onChange={this.handleChange}
-                />
-              </div>
-              {errors.email && <small className="help is-danger">{errors.email}</small>}
-            </div>
+                <div className="field">
+                  <label className="label">Email</label>
+                  <div className="control">
+                    <input 
+                      className={`input ${errors.email ? 'is-danger' : ''}`}
+                      name="email"
+                      placeholder="Email"
+                      onChange={this.handleChange}
+                    />
+                  </div>
+                  {errors.email && <small className="help is-danger">{errors.email}</small>}
+                </div>
 
-            <div className="field">
-              <label className="label">Password</label>
-              <div className="control">
-                <input 
-                  className={`input ${errors.password ? 'is-danger' : ''}`}
-                  name="password"
-                  type="password"
-                  placeholder="Password"
-                  onChange={this.handleChange}
-                />
-              </div>
-              {errors.password && <small className="help is-danger">{errors.password}</small>}
-            </div>
+                <div className="field">
+                  <label className="label">Password</label>
+                  <div className="control">
+                    <input 
+                      className={`input ${errors.password ? 'is-danger' : ''}`}
+                      name="password"
+                      type="password"
+                      placeholder="Password"
+                      onChange={this.handleChange}
+                    />
+                  </div>
+                  {errors.password && <small className="help is-danger">{errors.password}</small>}
+                </div>
 
-            <div className="field">
-              <label className="label">Password Confirmation</label>
-              <div className="control">
-                <input 
-                  className={`input ${errors.password ? 'is-danger' : ''}`}
-                  name="password_confirmation"
-                  type="password"
-                  placeholder="Password Confirmation"
-                  onChange={this.handleChange}
-                />
-              </div>
-              {errors.password && <small className="help is-danger">{errors.password}</small>}
-            </div>
+                <div className="field">
+                  <label className="label">Password Confirmation</label>
+                  <div className="control">
+                    <input 
+                      className={`input ${errors.password ? 'is-danger' : ''}`}
+                      name="password_confirmation"
+                      type="password"
+                      placeholder="Password Confirmation"
+                      onChange={this.handleChange}
+                    />
+                  </div>
+                  {errors.password && <small className="help is-danger">{errors.password}</small>}
+                </div>
 
-            <button type="submit" className="button is-info">Register</button>
-          </form>
+                <button type="submit" className="button is-info">Register</button>
+              </form>
+            </div>
+          </div>
         </div>
       </section>
     )
