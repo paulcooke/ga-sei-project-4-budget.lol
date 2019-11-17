@@ -3,18 +3,18 @@ import React from 'react'
 // may need to import link from react-router-dom
 
 
-
-class TransactionForm extends React.Component {
+class NewTransactionForm extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
       transaction: {
-        frequency: '',
+        recurrance: '',
         name: '',
         day_of_week: '',
         date_in_month: '',
         one_off_date: '',
+        annual_date: '',
         amount: '',
         category: ''
       }
@@ -29,15 +29,14 @@ class TransactionForm extends React.Component {
     this.setState({ transaction })
   }
 
-
-  // leaving yearly frequency out to start with, will add if there is time
+  // leaving yearly recurrance out to start with, will add if there is time
 
   render() {
-    console.log('props', this.props)
-    console.log('state', this.state)
+    console.log('new transaction props', this.props)
+    console.log('new transaction state', this.state)
     const { transaction } = this.state
     return (
-      <div className="list-payment">
+      <form className="list-payment">
         <div className="form-field">
           <div className="control">
             <input
@@ -53,8 +52,8 @@ class TransactionForm extends React.Component {
 
         <div className="form-field">
           <div className="select">
-            <select name="frequency" onChange={this.handleChange} value={transaction.frequency}>
-              <option value="" disabled>select frequency</option>
+            <select name="recurrance" onChange={this.handleChange} value={transaction.recurrance}>
+              <option value="" disabled>select recurrance</option>
               <option value="weekly">weekly</option>
               <option value="monthly">monthly</option>
               <option value="one-off">one-off</option>
@@ -62,7 +61,7 @@ class TransactionForm extends React.Component {
           </div>
         </div>
 
-        {transaction.frequency === 'weekly' &&
+        {transaction.recurrance === 'weekly' &&
           <>
             <div>each</div>
             <div className="form-field">
@@ -82,7 +81,7 @@ class TransactionForm extends React.Component {
           </>
         }
 
-        {transaction.frequency === 'monthly' &&
+        {transaction.recurrance === 'monthly' &&
           <>
             <div>on</div>
             <div className="form-field">
@@ -101,7 +100,7 @@ class TransactionForm extends React.Component {
           </>
         }
 
-        {transaction.frequency === 'one-off' &&
+        {transaction.recurrance === 'one-off' &&
           <div className="form-field">
             <div className="control">
               <input
@@ -116,7 +115,7 @@ class TransactionForm extends React.Component {
         }
 
         { transaction.name !== '' && 
-          transaction.frequency !== '' &&
+          transaction.recurrance !== '' &&
           (transaction.day_of_week !== '' || transaction.date_in_month !== '' || transaction.one_off_date !== '') &&
           <>
             <i className="fas fa-pound-sign"></i>
@@ -136,13 +135,13 @@ class TransactionForm extends React.Component {
         }
 
         {transaction.amount !== '' && 
-          <button className="button" value={this.props.category}>add</button>
+          <button className="button" value={this.props.category} type="submit">add</button>
         }
 
-      </div>
+      </form>
     )
   }
   
 } 
 
-export default TransactionForm
+export default NewTransactionForm

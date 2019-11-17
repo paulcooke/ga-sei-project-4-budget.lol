@@ -3,27 +3,52 @@ import axios from 'axios'
 import Auth from '../../lib/auth'
 
 import AccountsList from './AccountsList'
-import TransactionForm from './NewTransactionForm'
+import NewTransactionForm from './NewTransactionForm'
 
 class Dashboard extends React.Component {
   constructor() {
     super()
 
     this.state = {
-      accounts: []
+      accounts: [],
+      selectedAccountId: ''
     }
+
+    this.handleSelectAccount = this.handleSelectAccount.bind(this)
+    this.handleSubmitNewTransaction = this.handleSubmitNewTransaction.bind(this)
   }
 
   componentDidMount() {
+    this.getDashboardInfo()
+  }
+
+  getDashboardInfo() {
     axios.get('/api/accounts', {
       headers: { Authorization: `Bearer ${Auth.getToken()}` }
     })
       .then(res => this.setState({ accounts: res.data }))
+      .then(() => {
+        if (this.state.selectedAccountId === '') {
+          const selectedAccountId = this.state.accounts.find(account => account.is_main_account === true).id
+          this.setState({ selectedAccountId })
+        }
+      })
       .catch(err => console.log(err.message))
   }
 
+  handleSelectAccount(e) {
+    e.preventDefault()
+    console.log(e.target.value)
+    this.setState({ selectedAccountId: e.target.value })
+  }
+
+  handleSubmitNewTransaction() {
+
+  }
+
   render() {
-    console.log(this.state)
+    console.log('dashboard state', this.state)
+    console.log(this.state.selectedAccountId)
     const { accounts } = this.state
     return (
       <section className="section">
@@ -34,12 +59,15 @@ class Dashboard extends React.Component {
 
               <div className="message is-info">
                 <div className="message-header">
-                  <p>Your accounts</p>
+                  <p>Manage your account</p>
                 </div>
                 <div className="message-body">
+                  {accounts && 
                   <AccountsList
                     accounts={accounts}
-                  />
+                    handleSelectAccount={this.handleSelectAccount}
+                    selectedAccountId={this.state.selectedAccountId}
+                  />}
                 </div>
               </div>
 
@@ -67,7 +95,7 @@ class Dashboard extends React.Component {
                   <p><i className="fas fa-plus-circle"></i> Accomodation</p>
                 </div>
                 <div className="message-body">
-                  <TransactionForm 
+                  <NewTransactionForm 
                     placeholder="e.g rent, mortgage"
                     category="accomodation"
                   />
@@ -77,7 +105,7 @@ class Dashboard extends React.Component {
                   <p><i className="fas fa-plus-circle"></i> Utilities & bills</p>
                 </div>
                 <div className="message-body">
-                  <TransactionForm 
+                  <NewTransactionForm 
                     placeholder="e.g gas, water"
                     category="utilities"
                   />

@@ -27,3 +27,18 @@
 .form-field {
   padding: 12px;
 }
+
+.account-list {
+  display: flex;
+  flex-wrap: wrap;
+  // border: 1px solid rgb(202, 185, 26);
+  background: rgb(242, 221, 127);
+  width: 100%;
+  border-radius: 4px
+}
+
+.account-details {
+  display: inline-block;
+  padding: 12px;
+  text-align: middle;
+}
