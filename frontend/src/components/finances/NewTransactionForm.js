@@ -26,7 +26,7 @@ class NewTransactionForm extends React.Component {
         recurrance: '',
         name: '',
         day_of_week: '',
-        date_in_month: '',
+        date_in_month: null,
         one_off_date: null,
         annual_date: null,
         amount: '',
@@ -43,7 +43,9 @@ class NewTransactionForm extends React.Component {
     this.setState({ transaction })
   }
 
-
+  resetState() {
+    this.setState({ transaction: this.stateReset.transaction })
+  }
 
   // leaving yearly recurrance out to start with, will add if there is time
 
@@ -58,6 +60,7 @@ class NewTransactionForm extends React.Component {
           e.preventDefault()
           console.log(this.props.accountId, transaction)
           this.props.handleSubmitNewTransaction(this.props.accountId, transaction)
+          this.resetState()
         }}>
 
         <div className="form-field">
@@ -73,7 +76,7 @@ class NewTransactionForm extends React.Component {
           </div>
         </div>
 
-        <div className="form-field">
+        <div className="form-field specific-date-field">
           <div className="select">
             <select name="recurrance" onChange={this.handleChange} value={transaction.recurrance}>
               <option value="" disabled>select recurrance</option>
@@ -86,8 +89,8 @@ class NewTransactionForm extends React.Component {
 
         {transaction.recurrance === 'weekly' &&
           <>
-            <div>each</div>
-            <div className="form-field">
+            <div>on</div>
+            <div className="form-field specific-date-field">
               <div className="select">
                 <select name="day_of_week" onChange={this.handleChange} value={transaction.day_of_week}>
                   <option value="" disabled>choose day</option>
@@ -107,7 +110,7 @@ class NewTransactionForm extends React.Component {
         {transaction.recurrance === 'monthly' &&
           <>
             <div>on</div>
-            <div className="form-field">
+            <div className="form-field specific-date-field">
               <div className="control">
                 <input
                   className="input"
@@ -126,7 +129,7 @@ class NewTransactionForm extends React.Component {
         {transaction.recurrance === 'one-off' &&
           <>
             <div>on</div>
-            <div className="form-field">
+            <div className="form-field specific-date-field">
               <div className="control">
                 <input
                   className="input"
@@ -145,7 +148,7 @@ class NewTransactionForm extends React.Component {
           (transaction.day_of_week !== '' || transaction.date_in_month !== '' || transaction.one_off_date !== '') &&
           <>
             <i className="fas fa-pound-sign"></i>
-            <div className="form-field">
+            <div className="form-field money-field">
               <div className="control">
                 <input
                   className="input"

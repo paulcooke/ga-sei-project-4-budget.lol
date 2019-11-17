@@ -17,6 +17,7 @@ class Dashboard extends React.Component {
 
     // this.handleSelectAccount = this.handleSelectAccount.bind(this)
     this.handleSubmitNewTransaction = this.handleSubmitNewTransaction.bind(this) //not an event handler so does it need binding?
+    this.handleDeleteTransaction = this.handleDeleteTransaction.bind(this)
   }
 
   componentDidMount() {
@@ -52,9 +53,15 @@ class Dashboard extends React.Component {
     axios.post(`/api/accounts/${accountId}/futuretransactions`, { ...transaction }, {
       headers: { Authorization: `Bearer ${Auth.getToken()}` }
     })
-      .then(() => {
-        this.getDashboardInfo()
-      })
+      .then(() => this.getDashboardInfo())
+      .catch(err => console.log(err.message))
+  }
+
+  handleDeleteTransaction(transactionId) {
+    axios.delete(`/api//futuretransactions/${transactionId}`, {
+      headers: { Authorization: `Bearer ${Auth.getToken()}` }
+    })
+      .then(() => this.getDashboardInfo())
       .catch(err => console.log(err.message))
   }
 
@@ -135,6 +142,7 @@ class Dashboard extends React.Component {
                       <EditTransactionForm 
                         key={transaction.id}
                         { ...transaction }
+                        handleDeleteTransaction={this.handleDeleteTransaction}
                       />
                     ))
                   }
