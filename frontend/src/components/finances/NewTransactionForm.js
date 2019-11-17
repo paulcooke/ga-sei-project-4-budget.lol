@@ -12,9 +12,9 @@ class NewTransactionForm extends React.Component {
       transaction: {
         frequency: '',
         name: '',
-        dayOfWeek: '',
-        dateInMonth: '',
-        oneOff: '',
+        day_of_week: '',
+        date_in_month: '',
+        one_off_date: '',
         amount: ''
       }
     }
@@ -65,7 +65,7 @@ class NewTransactionForm extends React.Component {
             <div>each</div>
             <div className="form-field">
               <div className="select">
-                <select name="dayOfWeek" onChange={this.handleChange} value={transaction.dayOfWeek}>
+                <select name="day_of_week" onChange={this.handleChange} value={transaction.day_of_week}>
                   <option value="" disabled>choose day</option>
                   <option value="monday">monday</option>
                   <option value="tuesday">tuesday</option>
@@ -87,9 +87,9 @@ class NewTransactionForm extends React.Component {
               <div className="control">
                 <input
                   className="input"
-                  name="dateInMonth"
+                  name="date_in_month"
                   type="number"
-                  value={transaction.dateInMonth}
+                  value={transaction.date_in_month}
                   onChange={this.handleChange}
                   placeholder="e.g type 3 for the 3rd"
                 />
@@ -103,9 +103,9 @@ class NewTransactionForm extends React.Component {
             <div className="control">
               <input
                 className="input"
-                name="oneOff"
+                name="one_off_date"
                 type="date"
-                value={transaction.oneOff}
+                value={transaction.one_off_date}
                 onChange={this.handleChange}
               />
             </div>
@@ -114,7 +114,7 @@ class NewTransactionForm extends React.Component {
 
         { transaction.name !== '' && 
           transaction.frequency !== '' &&
-          (transaction.dayOfWeek !== '' || transaction.dateInMonth !== '' || transaction.oneOff !== '') &&
+          (transaction.day_of_week !== '' || transaction.date_in_month !== '' || transaction.one_off_date !== '') &&
           <>
             <i className="fas fa-pound-sign"></i>
             <div className="form-field">
@@ -135,7 +135,6 @@ class NewTransactionForm extends React.Component {
         {transaction.amount !== '' && 
           <button className="button">add</button>
         }
-
 
       </div>
     )
