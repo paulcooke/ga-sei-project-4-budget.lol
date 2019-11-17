@@ -8,3 +8,22 @@
 .money-out-header {
   border-bottom: solid 1px rgb(245, 250, 197);
 }
+
+.list-payment {
+  display: flex;
+  flex-wrap: wrap;
+  // border: 1px solid rgb(202, 185, 26);
+  background: rgb(242, 221, 127);
+  width: 100%;
+  align-items: center;
+  border-radius: 4px
+}
+
+.payment-field {
+  display: inline-block;
+  padding: 12px;
+}
+
+.form-field {
+  padding: 12px;
+}

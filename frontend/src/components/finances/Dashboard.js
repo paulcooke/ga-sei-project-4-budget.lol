@@ -3,6 +3,7 @@ import axios from 'axios'
 import Auth from '../../lib/auth'
 
 import AccountsList from './AccountsList'
+import NewTransactionForm from './NewTransactionForm'
 
 class Dashboard extends React.Component {
   constructor() {
@@ -43,7 +44,7 @@ class Dashboard extends React.Component {
               </div>
 
               <div className="box">
-                <h2 className="title is-3">Graphs going here</h2>
+                <h2 className="title is-3">Graph will go here</h2>
               </div>
 
               <h3 className="title is-3">Money In</h3>
@@ -52,11 +53,7 @@ class Dashboard extends React.Component {
                 <div className="message-header money-in-header">
                   <p><i className="fas fa-plus-circle"></i> Earnings</p>
                 </div>
-                <div className="message-body">
-                  <div className="list-payment">
-                      blah
-                  </div>
-                </div>
+                
                 
                 <div className="message-header money-in-header">
                   <p><i className="fas fa-plus-circle"></i> Other</p>
@@ -69,9 +66,21 @@ class Dashboard extends React.Component {
                 <div className="message-header money-out-header">
                   <p><i className="fas fa-plus-circle"></i> Accomodation</p>
                 </div>
+                <div className="message-body">
+                  <NewTransactionForm 
+                    accomPlaceholder="e.g rent, mortgage"
+                  />
+                </div>
+
                 <div className="message-header money-out-header">
                   <p><i className="fas fa-plus-circle"></i> Utilities & bills</p>
                 </div>
+                <div className="message-body">
+                  <NewTransactionForm 
+                    accomPlaceholder="e.g gas, water"
+                  />
+                </div>
+
                 <div className="message-header money-out-header">
                   <p><i className="fas fa-plus-circle"></i> Travel</p>
                 </div>
