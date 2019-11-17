@@ -4,7 +4,7 @@ import React from 'react'
 
 
 
-class NewTransactionForm extends React.Component {
+class TransactionForm extends React.Component {
   constructor(props) {
     super(props)
 
@@ -15,7 +15,8 @@ class NewTransactionForm extends React.Component {
         day_of_week: '',
         date_in_month: '',
         one_off_date: '',
-        amount: ''
+        amount: '',
+        category: ''
       }
     }
 
@@ -27,6 +28,7 @@ class NewTransactionForm extends React.Component {
     const transaction = { ...this.state.transaction, [name]: newValue }
     this.setState({ transaction })
   }
+
 
   // leaving yearly frequency out to start with, will add if there is time
 
@@ -42,7 +44,7 @@ class NewTransactionForm extends React.Component {
               className="input"
               type="text"
               name="name"
-              placeholder={this.props.accomPlaceholder}
+              placeholder={this.props.placeholder}
               onChange={this.handleChange}
               value={transaction.name}
             />
@@ -89,9 +91,10 @@ class NewTransactionForm extends React.Component {
                   className="input"
                   name="date_in_month"
                   type="number"
+                  max="28"
                   value={transaction.date_in_month}
                   onChange={this.handleChange}
-                  placeholder="e.g type 3 for the 3rd"
+                  placeholder="date (28 or below)"
                 />
               </div>
             </div>
@@ -122,7 +125,7 @@ class NewTransactionForm extends React.Component {
                 <input
                   className="input"
                   name="amount"
-                  type="float"
+                  type="number"
                   value={transaction.amount}
                   onChange={this.handleChange}
                   placeholder="how much"
@@ -133,7 +136,7 @@ class NewTransactionForm extends React.Component {
         }
 
         {transaction.amount !== '' && 
-          <button className="button">add</button>
+          <button className="button" value={this.props.category}>add</button>
         }
 
       </div>
@@ -142,4 +145,4 @@ class NewTransactionForm extends React.Component {
   
 } 
 
-export default NewTransactionForm
+export default TransactionForm

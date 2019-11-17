@@ -3,7 +3,7 @@ import axios from 'axios'
 import Auth from '../../lib/auth'
 
 import AccountsList from './AccountsList'
-import NewTransactionForm from './NewTransactionForm'
+import TransactionForm from './NewTransactionForm'
 
 class Dashboard extends React.Component {
   constructor() {
@@ -67,8 +67,9 @@ class Dashboard extends React.Component {
                   <p><i className="fas fa-plus-circle"></i> Accomodation</p>
                 </div>
                 <div className="message-body">
-                  <NewTransactionForm 
-                    accomPlaceholder="e.g rent, mortgage"
+                  <TransactionForm 
+                    placeholder="e.g rent, mortgage"
+                    category="accomodation"
                   />
                 </div>
 
@@ -76,8 +77,9 @@ class Dashboard extends React.Component {
                   <p><i className="fas fa-plus-circle"></i> Utilities & bills</p>
                 </div>
                 <div className="message-body">
-                  <NewTransactionForm 
-                    accomPlaceholder="e.g gas, water"
+                  <TransactionForm 
+                    placeholder="e.g gas, water"
+                    category="utilities"
                   />
                 </div>
 
