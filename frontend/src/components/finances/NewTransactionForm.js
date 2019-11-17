@@ -13,30 +13,55 @@ class NewTransactionForm extends React.Component {
         name: '',
         day_of_week: '',
         date_in_month: '',
-        one_off_date: '',
-        annual_date: '',
+        one_off_date: null,
+        annual_date: null,
         amount: '',
-        category: ''
+        category: '',
+        transaction_is_debit: true
       }
     }
 
+    this.stateReset = {
+      transaction: {
+        recurrance: '',
+        name: '',
+        day_of_week: '',
+        date_in_month: '',
+        one_off_date: null,
+        annual_date: null,
+        amount: '',
+        category: '',
+        transaction_is_debit: true
+      }
+    }
+    
     this.handleChange = this.handleChange.bind(this)
   }
 
   handleChange({ target: { name, value, type, checked } }) {
     const newValue = type === 'checkbox' ? checked : value // might be able to take checked out if dont end up using it
-    const transaction = { ...this.state.transaction, [name]: newValue }
+    const transaction = { ...this.state.transaction, [name]: newValue, category: this.props.category }
     this.setState({ transaction })
   }
 
+
+
   // leaving yearly recurrance out to start with, will add if there is time
 
+  // console.log('new transaction props', this.props)
+  // console.log('new transaction state', this.state)
   render() {
     console.log('new transaction props', this.props)
     console.log('new transaction state', this.state)
     const { transaction } = this.state
     return (
-      <form className="list-payment">
+      <form className="list-payment"
+        onSubmit={(e) => {
+          e.preventDefault()
+          console.log(this.props.accountId, transaction)
+          this.props.handleSubmitNewTransaction(this.props.accountId, transaction)
+        }}>
+
         <div className="form-field">
           <div className="control">
             <input
@@ -135,7 +160,7 @@ class NewTransactionForm extends React.Component {
         }
 
         {transaction.amount !== '' && 
-          <button className="button" value={this.props.category} type="submit">add</button>
+          <button className="button" type="submit">add</button>
         }
 
       </form>

@@ -18,7 +18,7 @@ class Account(models.Model):
     min_headroom = models.FloatField(blank=True, default=0)
     current_balance = models.FloatField(null=True) # should be required?
     last_balance_update = models.DateField(null=True, blank=True)
-    is_main_account = models.BooleanField(null=True)
+    is_main_account = models.BooleanField(null=True, default=True)
 
     def __str__(self):
         return self.name

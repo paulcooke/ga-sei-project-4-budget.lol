@@ -14,8 +14,8 @@ class Dashboard extends React.Component {
       selectedAccountId: ''
     }
 
-    this.handleSelectAccount = this.handleSelectAccount.bind(this)
-    this.handleSubmitNewTransaction = this.handleSubmitNewTransaction.bind(this)
+    // this.handleSelectAccount = this.handleSelectAccount.bind(this)
+    this.handleSubmitNewTransaction = this.handleSubmitNewTransaction.bind(this) //not an event handler so does it need binding?
   }
 
   componentDidMount() {
@@ -27,6 +27,7 @@ class Dashboard extends React.Component {
       headers: { Authorization: `Bearer ${Auth.getToken()}` }
     })
       .then(res => this.setState({ accounts: res.data }))
+      // below is in preparation for multiple accounts, sets initial account ot display.
       .then(() => {
         if (this.state.selectedAccountId === '') {
           const selectedAccountId = this.state.accounts.find(account => account.is_main_account === true).id
@@ -36,25 +37,31 @@ class Dashboard extends React.Component {
       .catch(err => console.log(err.message))
   }
 
-  handleSelectAccount(e) {
-    e.preventDefault()
-    console.log(e.target.value)
-    this.setState({ selectedAccountId: e.target.value })
-  }
+  // handleSelectAccount(e) {
+  //   e.preventDefault()
+  //   console.log(e.target.value)
+  //   this.setState({ selectedAccountId: e.target.value })
+  // }
 
-  handleSubmitNewTransaction() {
-
+  handleSubmitNewTransaction(accountId, transaction) {
+    axios.post(`/api/accounts/${accountId}/futuretransactions`, { transaction }, {
+      headers: { Authorization: `Bearer ${Auth.getToken()}` }
+    })
+      .then(() => {
+        this.getDashboardInfo()
+      })
+      .catch(err => console.log(err.message))
   }
 
   render() {
     console.log('dashboard state', this.state)
     console.log(this.state.selectedAccountId)
-    const { accounts } = this.state
+    const { accounts, selectedAccountId } = this.state
     return (
       <section className="section">
         <div className="columns is-centered">
           <div className="column is-four-fifths">
-            <h1 className="title is-2">bananas</h1>
+            <h1 className="title is-2">Time to budget, lol.</h1>
             <div>
 
               <div className="message is-info">
@@ -65,8 +72,7 @@ class Dashboard extends React.Component {
                   {accounts && 
                   <AccountsList
                     accounts={accounts}
-                    handleSelectAccount={this.handleSelectAccount}
-                    selectedAccountId={this.state.selectedAccountId}
+                    selectedAccountId={selectedAccountId}
                   />}
                 </div>
               </div>
@@ -96,6 +102,8 @@ class Dashboard extends React.Component {
                 </div>
                 <div className="message-body">
                   <NewTransactionForm 
+                    accountId={selectedAccountId}
+                    handleSubmitNewTransaction={this.handleSubmitNewTransaction}
                     placeholder="e.g rent, mortgage"
                     category="accomodation"
                   />
@@ -106,6 +114,8 @@ class Dashboard extends React.Component {
                 </div>
                 <div className="message-body">
                   <NewTransactionForm 
+                    accountId={selectedAccountId}
+                    handleSubmitNewTransaction={this.handleSubmitNewTransaction}
                     placeholder="e.g gas, water"
                     category="utilities"
                   />
