@@ -6,6 +6,7 @@ class EditTransactionForm extends React.Component {
   }
 
   render() {
+    console.log('edit transaction props', this.props)
     return 'bananas'
   }
 

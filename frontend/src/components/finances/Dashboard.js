@@ -38,6 +38,10 @@ class Dashboard extends React.Component {
       .catch(err => console.log(err.message))
   }
 
+  transactionFilter(transactionCategory) {
+    return this.state.accounts[0].future_transactions.filter(transaction => transaction.category === transactionCategory)
+  }
+
   // handleSelectAccount(e) {
   //   e.preventDefault()
   //   console.log(e.target.value)
@@ -45,8 +49,7 @@ class Dashboard extends React.Component {
   // }
 
   handleSubmitNewTransaction(accountId, transaction) {
-    console.log(accountId, transaction)
-    axios.post(`api/accounts/${accountId}/futuretransactions`, { ...transaction }, {
+    axios.post(`/api/accounts/${accountId}/futuretransactions`, { ...transaction }, {
       headers: { Authorization: `Bearer ${Auth.getToken()}` }
     })
       .then(() => {
@@ -103,27 +106,39 @@ class Dashboard extends React.Component {
                   <p><i className="fas fa-plus-circle"></i> Accomodation</p>
                 </div>
                 <div className="message-body">
-                  <NewTransactionForm 
-                    accountId={selectedAccountId}
-                    handleSubmitNewTransaction={this.handleSubmitNewTransaction}
-                    placeholder="e.g rent, mortgage"
-                    category="accomodation"
-                  />
+                  {accounts && 
+                    <NewTransactionForm 
+                      accountId={selectedAccountId}
+                      handleSubmitNewTransaction={this.handleSubmitNewTransaction}
+                      placeholder="e.g rent, mortgage"
+                      category="accomodation"
+                    />
+                  }
                 </div>
 
                 <div className="message-header money-out-header">
                   <p><i className="fas fa-plus-circle"></i> Utilities & bills</p>
                 </div>
                 <div className="message-body">
-                  
-                </div>
-                <div className="message-body">
-                  <EditTransactionForm 
+                  {accounts && 
+                  <NewTransactionForm 
                     accountId={selectedAccountId}
-                    
+                    handleSubmitNewTransaction={this.handleSubmitNewTransaction}
                     placeholder="e.g gas, water"
                     category="utilities"
                   />
+                  }
+                </div>
+                <div className="message-body">
+                  {accounts.length > 0 && 
+                    this.transactionFilter('utilities').map(transaction => (
+                      <EditTransactionForm key={transaction.id}
+                        accountId={selectedAccountId}
+                        placeholder="e.g gas, water"
+                        category="utilities"
+                      />
+                    ))
+                  }
                 </div>
 
                 <div className="message-header money-out-header">
