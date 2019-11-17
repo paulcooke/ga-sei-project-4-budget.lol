@@ -132,10 +132,9 @@ class Dashboard extends React.Component {
                 <div className="message-body">
                   {accounts.length > 0 && 
                     this.transactionFilter('utilities').map(transaction => (
-                      <EditTransactionForm key={transaction.id}
-                        accountId={selectedAccountId}
-                        placeholder="e.g gas, water"
-                        category="utilities"
+                      <EditTransactionForm 
+                        key={transaction.id}
+                        { ...transaction }
                       />
                     ))
                   }

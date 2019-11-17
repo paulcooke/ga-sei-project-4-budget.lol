@@ -12,7 +12,7 @@ class NewTransactionForm extends React.Component {
         recurrance: '',
         name: '',
         day_of_week: '',
-        date_in_month: '',
+        date_in_month: null,
         one_off_date: null,
         annual_date: null,
         amount: '',
@@ -38,9 +38,8 @@ class NewTransactionForm extends React.Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
-  handleChange({ target: { name, value, type, checked } }) {
-    const newValue = type === 'checkbox' ? checked : value // might be able to take checked out if dont end up using it
-    const transaction = { ...this.state.transaction, [name]: newValue, category: this.props.category }
+  handleChange({ target: { name, value } }) {
+    const transaction = { ...this.state.transaction, [name]: value, category: this.props.category }
     this.setState({ transaction })
   }
 
@@ -51,8 +50,7 @@ class NewTransactionForm extends React.Component {
   // console.log('new transaction props', this.props)
   // console.log('new transaction state', this.state)
   render() {
-    console.log('new transaction props', this.props)
-    console.log('new transaction state', this.state)
+
     const { transaction } = this.state
     return (
       <form className="list-payment"
@@ -126,17 +124,20 @@ class NewTransactionForm extends React.Component {
         }
 
         {transaction.recurrance === 'one-off' &&
-          <div className="form-field">
-            <div className="control">
-              <input
-                className="input"
-                name="one_off_date"
-                type="date"
-                value={transaction.one_off_date}
-                onChange={this.handleChange}
-              />
+          <>
+            <div>on</div>
+            <div className="form-field">
+              <div className="control">
+                <input
+                  className="input"
+                  name="one_off_date"
+                  type="date"
+                  value={transaction.one_off_date}
+                  onChange={this.handleChange}
+                />
+              </div>
             </div>
-          </div>
+          </>
         }
 
         { transaction.name !== '' && 
