@@ -4,6 +4,7 @@ import Auth from '../../lib/auth'
 
 import AccountsList from './AccountsList'
 import NewTransactionForm from './NewTransactionForm'
+import EditTransactionForm from './EditTransactionForm'
 
 class Dashboard extends React.Component {
   constructor() {
@@ -44,7 +45,8 @@ class Dashboard extends React.Component {
   // }
 
   handleSubmitNewTransaction(accountId, transaction) {
-    axios.post(`/api/accounts/${accountId}/futuretransactions`, { transaction }, {
+    console.log(accountId, transaction)
+    axios.post(`api/accounts/${accountId}/futuretransactions`, { ...transaction }, {
       headers: { Authorization: `Bearer ${Auth.getToken()}` }
     })
       .then(() => {
@@ -113,9 +115,12 @@ class Dashboard extends React.Component {
                   <p><i className="fas fa-plus-circle"></i> Utilities & bills</p>
                 </div>
                 <div className="message-body">
-                  <NewTransactionForm 
+                  
+                </div>
+                <div className="message-body">
+                  <EditTransactionForm 
                     accountId={selectedAccountId}
-                    handleSubmitNewTransaction={this.handleSubmitNewTransaction}
+                    
                     placeholder="e.g gas, water"
                     category="utilities"
                   />
