@@ -42,7 +42,7 @@ class Dashboard extends React.Component {
     this.handleSubmitNewTransaction = this.handleSubmitNewTransaction.bind(this) //not an event handler so does it need binding?
     this.handleUpdateTransaction = this.handleUpdateTransaction.bind(this) // not sure needs binding
     this.handleDeleteTransaction = this.handleDeleteTransaction.bind(this) // not sure needs binding
-    // this.handlePanels = this.handlePanels.bind(this)
+    this.handlePanels = this.handlePanels.bind(this)
   }
 
   componentDidMount() {
@@ -68,10 +68,10 @@ class Dashboard extends React.Component {
     return this.state.accounts[0].future_transactions.filter(transaction => transaction.category === transactionCategory)
   }
 
-  handlePanels(e) {
-    e.preventDefault()
-    const panelName = e.target.value
-    const panels = { ...this.state.panels, panelName: !this.setState.panelName }
+  handlePanels(panelName) {
+    // e.preventDefault()
+    console.log(this.state.panels[panelName])
+    const panels = { ...this.state.panels, [panelName]: !this.state.panels[panelName] }
     this.setState({ panels })
   }
 
@@ -129,10 +129,6 @@ class Dashboard extends React.Component {
                 </div>
               </div>
 
-              <div className="box">
-                <h2 className="title is-3">Graph will go here</h2>
-              </div>
-
               <h3 className="title is-3">Money In</h3>
 
               <div className="message is-success">
@@ -146,38 +142,45 @@ class Dashboard extends React.Component {
                 </div>
               </div>
 
+              <div className="box">
+                <h2 className="title is-3">Graph will go here</h2>
+              </div>
+
               <h3 className="title is-3">Money Out</h3>
 
               {
                 this.categories.categoryList.map(category => (
-                  <div className="message is-warning" key={category.name} onClick={this.handlePanels} value={category.name}>
+                  <div className="message is-warning money-out" key={category.name}>
                     <div className="message-header money-out-header">
-                      <p><i className="fas fa-plus-circle"></i> {category.title}</p>
+                      <p><i className="fas fa-plus-circle" onClick={() => this.handlePanels(category.name)} ></i> {category.title}</p>
                     </div>
-                    <div className="message-body">
-                      {accounts && 
-                        <NewTransactionForm 
-                          accountId={selectedAccountId}
-                          handleSubmitNewTransaction={this.handleSubmitNewTransaction}
-                          placeholder={category.placeholder}
-                          category={category.name}
-                        />
-                      }
-                    </div>
-                    <div className="message-body">
-                      {accounts.length > 0 && 
-                        this.transactionFilter(category.name).map(transaction => (
-                          <EditTransactionForm 
-                            key={transaction.id}
-                            { ...transaction }
-                            handleDeleteTransaction={this.handleDeleteTransaction}
-                            handleUpdateTransaction={this.handleUpdateTransaction}
+                    {this.state.panels[category.name] === true &&
+                    <>
+                      <div className="message-body">
+                        {accounts && 
+                          <NewTransactionForm 
+                            accountId={selectedAccountId}
+                            handleSubmitNewTransaction={this.handleSubmitNewTransaction}
+                            placeholder={category.placeholder}
+                            category={category.name}
                           />
-                        ))
-                      }
-                    </div>
+                        }
+                      </div>
+                      <div className="message-body">
+                        {accounts.length > 0 && 
+                          this.transactionFilter(category.name).map(transaction => (
+                            <EditTransactionForm 
+                              key={transaction.id}
+                              { ...transaction }
+                              handleDeleteTransaction={this.handleDeleteTransaction}
+                              handleUpdateTransaction={this.handleUpdateTransaction}
+                            />
+                          ))
+                        }
+                      </div>
+                    </>
+                    }
                   </div>
-
                 ))
               }
 

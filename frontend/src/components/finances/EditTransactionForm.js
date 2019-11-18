@@ -37,7 +37,7 @@ class EditTransactionForm extends React.Component {
   // console.log('edit transaction props', this.props)
   // console.log('edit transaction state', this.state)
   render() {
-    const { name, recurrance, day_of_week, date_in_month, one_off_date, amount, id } = this.state.transaction
+    const { name, recurrance, day_of_week, date_in_month, one_off_date, amount } = this.state.transaction
     return (
       <>
         <div className="list-payment">
