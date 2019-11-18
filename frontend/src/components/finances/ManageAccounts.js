@@ -7,9 +7,9 @@ class ManageAccounts extends React.Component {
 
     this.state = {
       account: {
-        name: 'moni\'s current account',
-        bank: 'bank of cats',
-        current_balance: 4500,
+        name: '',
+        bank: '',
+        current_balance: null,
         is_main_account: true,
         last_balance_update: null
       }
@@ -18,14 +18,26 @@ class ManageAccounts extends React.Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
+  componentDidMount() {
+    const account = {
+      name: this.props.name,
+      bank: this.props.bank,
+      current_balance: this.props.current_balance,
+      is_main_account: this.props.is_main_account,
+      last_balance_update: this.props.last_balance_update,
+    }
+    this.setState({ account: account })
+  }
+
   handleChange({ target: { name, value } }) {
     const account = { ...this.state.account, [name]: value }
     this.setState({ account })
   }
 
+
+  // console.log('account props', this.props)
+  // console.log('account state', this.state)
   render() {
-    console.log('account props', this.props)
-    console.log('account state', this.state)
     const { current_balance, name, bank } = this.state.account
     return (
       <>

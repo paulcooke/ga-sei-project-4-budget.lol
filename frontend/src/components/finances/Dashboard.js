@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import Auth from '../../lib/auth'
 
+import NewAccountForm from './NewAccountForm'
 import ManageAccounts from './ManageAccounts'
 import NewTransactionForm from './NewTransactionForm'
 import EditTransactionForm from './EditTransactionForm'
@@ -39,10 +40,11 @@ class Dashboard extends React.Component {
     }
 
     // this.handleSelectAccount = this.handleSelectAccount.bind(this)
-    this.handleSubmitNewTransaction = this.handleSubmitNewTransaction.bind(this) //not an event handler so does it need binding?
-    this.handleUpdateTransaction = this.handleUpdateTransaction.bind(this) // not sure needs binding
-    this.handleDeleteTransaction = this.handleDeleteTransaction.bind(this) // not sure needs binding
-    this.handleUpdateAccount = this.handleUpdateAccount.bind(this) // not sure needs binding
+    this.handleSubmitNewTransaction = this.handleSubmitNewTransaction.bind(this) 
+    this.handleUpdateTransaction = this.handleUpdateTransaction.bind(this) 
+    this.handleDeleteTransaction = this.handleDeleteTransaction.bind(this) 
+    this.handleNewAccount = this.handleNewAccount.bind(this) 
+    this.handleUpdateAccount = this.handleUpdateAccount.bind(this) 
     this.handlePanels = this.handlePanels.bind(this)
   }
 
@@ -81,6 +83,14 @@ class Dashboard extends React.Component {
   //   console.log(e.target.value)
   //   this.setState({ selectedAccountId: e.target.value })
   // }
+
+  handleNewAccount(accountDetails) {
+    axios.post('/api/accounts', { ...accountDetails }, {
+      headers: { Authorization: `Bearer ${Auth.getToken()}` }
+    })
+      .then(() => this.getDashboardInfo())
+      .catch(err => console.log(err.mesasge))
+  }
 
   handleUpdateAccount(accountDetails) {
     axios.put(`/api/accounts/${this.state.selectedAccountId}`, { ...accountDetails }, {
@@ -135,6 +145,14 @@ class Dashboard extends React.Component {
                       { ...accounts[0] }
                       handleUpdateAccount={this.handleUpdateAccount}
                     />
+                  }
+                  {accounts.length === 0 &&
+                    <>
+                      <p>create your account to get started</p>
+                      <NewAccountForm 
+                        handleNewAccount={this.handleNewAccount}
+                      />
+                    </>
                   }
                 </div>
               </div>
