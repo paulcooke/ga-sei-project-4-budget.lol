@@ -39,7 +39,13 @@ class NewTransactionForm extends React.Component {
   }
 
   handleChange({ target: { name, value } }) {
-    const transaction = { ...this.state.transaction, [name]: value, category: this.props.category }
+    const transaction_is_debit = this.props.category === 'moneyin' ? false : true
+    const transaction = { 
+      ...this.state.transaction, 
+      [name]: value, 
+      category: this.props.category, 
+      transaction_is_debit: transaction_is_debit
+    }
     this.setState({ transaction })
   }
 
@@ -49,15 +55,15 @@ class NewTransactionForm extends React.Component {
 
   // leaving yearly recurrance out to start with, will add if there is time
 
-  // console.log('new transaction props', this.props)
-  // console.log('new transaction state', this.state)
-  render() {
 
+  render() {
+    console.log('new transaction props', this.props)
+    console.log('new transaction state', this.state)
     const { transaction } = this.state
     return (
       <>
         <small>add new transaction</small>
-        <form className="list-payment"
+        <form className={`list-payment ${this.props.category === 'moneyin' ? 'list-payment-money-in' : '' }`}
           onSubmit={(e) => {
             e.preventDefault()
             console.log(this.props.accountId, transaction)

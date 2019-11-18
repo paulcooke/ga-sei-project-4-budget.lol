@@ -24,7 +24,7 @@ class ManageAccounts extends React.Component {
       bank: this.props.bank,
       current_balance: this.props.current_balance,
       is_main_account: this.props.is_main_account,
-      last_balance_update: this.props.last_balance_update,
+      last_balance_update: this.props.last_balance_update
     }
     this.setState({ account: account })
   }

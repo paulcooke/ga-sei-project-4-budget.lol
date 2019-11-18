@@ -1,6 +1,6 @@
 import React from 'react'
-import axios from 'axios'
-import Auth from '../../lib/auth'
+// import axios from 'axios'
+// import Auth from '../../lib/auth'
 
 class EditTransactionForm extends React.Component {
   constructor(props) {
@@ -34,15 +34,15 @@ class EditTransactionForm extends React.Component {
     this.setState({ transaction })
   }
 
-  // console.log('edit transaction props', this.props)
-  // console.log('edit transaction state', this.state)
   render() {
+    console.log('edit transaction props', this.props)
+    console.log('edit transaction state', this.state)
     const { name, recurrance, day_of_week, date_in_month, one_off_date, amount } = this.state.transaction
     return (
       <>
         <div className="list-payment">
           
-          <form className="list-payment"
+          <form className={`list-payment ${this.props.category === 'moneyin' ? 'list-payment-money-in' : '' }`}
             onSubmit={(e) => {
               e.preventDefault()
               this.props.handleUpdateTransaction(this.state.transaction.id, this.state.transaction)

@@ -4,7 +4,6 @@ import Auth from '../../lib/auth'
 
 import NewAccountForm from './NewAccountForm'
 import ManageAccounts from './ManageAccounts'
-import ManageMoneyIn from './ManageMoneyIn'
 import NewTransactionForm from './NewTransactionForm'
 import EditTransactionForm from './EditTransactionForm'
 
@@ -23,7 +22,8 @@ class Dashboard extends React.Component {
         entertainment: false,
         insurance: false,
         credit: false,
-        other: false
+        other: false,
+        moneyIn: false
       }
     }
 
@@ -162,13 +162,37 @@ class Dashboard extends React.Component {
 
               <div className="message is-success">
                 <div className="message-header money-in-header">
-                  <p><i className="fas fa-plus-circle"></i> Earnings</p>
+                  <p><i className="fas fa-plus-circle" onClick={() => this.handlePanels('moneyIn')}></i> Add regular or one-off income</p>
                 </div>
+                {this.state.panels['moneyIn'] === true &&
+                  <>
+                    <div className="message-body">
+                      {accounts && 
+                        <NewTransactionForm 
+                          accountId={selectedAccountId}
+                          handleSubmitNewTransaction={this.handleSubmitNewTransaction}
+                          placeholder="e.g. takehome pay"
+                          category="moneyin"
+                        />
+                      }
+                    </div>
+                    <div className="message-body">
+                      {accounts.length > 0 && 
+                        this.transactionFilter('moneyin').map(transaction => (
+                          <EditTransactionForm 
+                            key={transaction.id}
+                            { ...transaction }
+                            handleDeleteTransaction={this.handleDeleteTransaction}
+                            handleUpdateTransaction={this.handleUpdateTransaction}
+                          />
+                        ))
+                      }
+                    </div>
+                  </>
+                }
                 
                 
-                <div className="message-header money-in-header">
-                  <p><i className="fas fa-plus-circle"></i> Other</p>
-                </div>
+                
               </div>
 
               <div className="box">
@@ -181,7 +205,7 @@ class Dashboard extends React.Component {
                 this.categories.categoryList.map(category => (
                   <div className="message is-warning money-out" key={category.name}>
                     <div className="message-header money-out-header">
-                      <p><i className="fas fa-plus-circle" onClick={() => this.handlePanels(category.name)} ></i> {category.title}</p>
+                      <p><i className="fas fa-plus-circle" onClick={() => this.handlePanels(category.name)}></i> {category.title}</p>
                     </div>
                     {this.state.panels[category.name] === true &&
                     <>
