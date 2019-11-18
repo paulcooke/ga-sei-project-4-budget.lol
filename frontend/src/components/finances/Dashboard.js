@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import Auth from '../../lib/auth'
 
-import AccountsList from './AccountsList'
+import ManageAccounts from './ManageAccounts'
 import NewTransactionForm from './NewTransactionForm'
 import EditTransactionForm from './EditTransactionForm'
 
@@ -42,6 +42,7 @@ class Dashboard extends React.Component {
     this.handleSubmitNewTransaction = this.handleSubmitNewTransaction.bind(this) //not an event handler so does it need binding?
     this.handleUpdateTransaction = this.handleUpdateTransaction.bind(this) // not sure needs binding
     this.handleDeleteTransaction = this.handleDeleteTransaction.bind(this) // not sure needs binding
+    this.handleUpdateAccount = this.handleUpdateAccount.bind(this) // not sure needs binding
     this.handlePanels = this.handlePanels.bind(this)
   }
 
@@ -80,6 +81,14 @@ class Dashboard extends React.Component {
   //   console.log(e.target.value)
   //   this.setState({ selectedAccountId: e.target.value })
   // }
+
+  handleUpdateAccount(accountDetails) {
+    axios.put(`/api/accounts/${this.state.selectedAccountId}`, { ...accountDetails }, {
+      headers: { Authorization: `Bearer ${Auth.getToken()}` }
+    })
+      .then(() => this.getDashboardInfo())
+      .catch(err => console.log(err.mesasge))
+  }
 
   handleSubmitNewTransaction(accountId, transaction) {
     axios.post(`/api/accounts/${accountId}/futuretransactions`, { ...transaction }, {
@@ -121,11 +130,12 @@ class Dashboard extends React.Component {
                   <p>Manage your account</p>
                 </div>
                 <div className="message-body">
-                  {accounts && 
-                  <AccountsList
-                    accounts={accounts}
-                    selectedAccountId={selectedAccountId}
-                  />}
+                  {accounts.length > 0 && 
+                    <ManageAccounts
+                      { ...accounts[0] }
+                      handleUpdateAccount={this.handleUpdateAccount}
+                    />
+                  }
                 </div>
               </div>
 

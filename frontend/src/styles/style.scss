@@ -40,13 +40,18 @@
   width: 210px;
 }
 
-.account-list {
+.account-list, .manage-account-form {
   display: flex;
   flex-wrap: wrap;
   // border: 1px solid rgb(202, 185, 26);
   background: rgb(242, 221, 127);
   width: 100%;
   border-radius: 4px
+}
+
+.manage-account-form {
+  background: rgb(179, 201, 241);
+  align-items: center;
 }
 
 .account-details {

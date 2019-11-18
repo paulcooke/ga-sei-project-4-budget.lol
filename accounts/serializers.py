@@ -23,7 +23,7 @@ class AccountSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Account
-        fields = ('id', 'user', 'name', 'bank', 'description', 'min_headroom', 'current_balance', 'future_transactions', 'is_main_account')
+        fields = ('id', 'user', 'name', 'bank', 'description', 'min_headroom', 'current_balance', 'future_transactions', 'is_main_account', 'last_balance_update')
         extra_kwargs = {'user': {'required': False}}
 
 class PopulatedAccountSerializer(AccountSerializer):
