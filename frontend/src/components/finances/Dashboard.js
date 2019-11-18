@@ -13,11 +13,14 @@ class Dashboard extends React.Component {
     this.state = {
       accounts: [],
       selectedAccountId: ''
+      // panelOpen: false
     }
 
     // this.handleSelectAccount = this.handleSelectAccount.bind(this)
     this.handleSubmitNewTransaction = this.handleSubmitNewTransaction.bind(this) //not an event handler so does it need binding?
-    this.handleDeleteTransaction = this.handleDeleteTransaction.bind(this)
+    this.handleUpdateTransaction = this.handleUpdateTransaction.bind(this) // not sure needs binding
+    this.handleDeleteTransaction = this.handleDeleteTransaction.bind(this) // not sure needs binding
+    // this.handlePanels = this.handlePanels.bind(this)
   }
 
   componentDidMount() {
@@ -42,6 +45,11 @@ class Dashboard extends React.Component {
   transactionFilter(transactionCategory) {
     return this.state.accounts[0].future_transactions.filter(transaction => transaction.category === transactionCategory)
   }
+
+  // handlePanels(e) {
+  //   e.preventDefault()
+  //   this.setState({ panelOpen: !this.setState.panelOpen })
+  // }
 
   // handleSelectAccount(e) {
   //   e.preventDefault()
