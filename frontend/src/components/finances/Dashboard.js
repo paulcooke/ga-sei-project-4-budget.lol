@@ -130,6 +130,18 @@ class Dashboard extends React.Component {
                     />
                   }
                 </div>
+                <div className="message-body">
+                  {accounts.length > 0 && 
+                    this.transactionFilter('accomodation').map(transaction => (
+                      <EditTransactionForm 
+                        key={transaction.id}
+                        { ...transaction }
+                        handleDeleteTransaction={this.handleDeleteTransaction}
+                        handleUpdateTransaction={this.handleUpdateTransaction}
+                      />
+                    ))
+                  }
+                </div>
 
                 <div className="message-header money-out-header">
                   <p><i className="fas fa-plus-circle"></i> Utilities & bills</p>
@@ -145,7 +157,6 @@ class Dashboard extends React.Component {
                   }
                 </div>
                 <div className="message-body">
-                  <small>edit transactions</small>
                   {accounts.length > 0 && 
                     this.transactionFilter('utilities').map(transaction => (
                       <EditTransactionForm 
@@ -161,21 +172,159 @@ class Dashboard extends React.Component {
                 <div className="message-header money-out-header">
                   <p><i className="fas fa-plus-circle"></i> Travel</p>
                 </div>
+                <div className="message-body">
+                  {accounts && 
+                  <NewTransactionForm 
+                    accountId={selectedAccountId}
+                    handleSubmitNewTransaction={this.handleSubmitNewTransaction}
+                    placeholder="e.g commute"
+                    category="travel"
+                  />
+                  }
+                </div>
+                <div className="message-body">
+                  {accounts.length > 0 && 
+                    this.transactionFilter('travel').map(transaction => (
+                      <EditTransactionForm 
+                        key={transaction.id}
+                        { ...transaction }
+                        handleDeleteTransaction={this.handleDeleteTransaction}
+                        handleUpdateTransaction={this.handleUpdateTransaction}
+                      />
+                    ))
+                  }
+                </div>
+
                 <div className="message-header money-out-header">
                   <p><i className="fas fa-plus-circle"></i> Food & drink</p>
                 </div>
+                <div className="message-body">
+                  {accounts && 
+                  <NewTransactionForm 
+                    accountId={selectedAccountId}
+                    handleSubmitNewTransaction={this.handleSubmitNewTransaction}
+                    placeholder="e.g lunch"
+                    category="food"
+                  />
+                  }
+                </div>
+                <div className="message-body">
+                  {accounts.length > 0 && 
+                    this.transactionFilter('food').map(transaction => (
+                      <EditTransactionForm 
+                        key={transaction.id}
+                        { ...transaction }
+                        handleDeleteTransaction={this.handleDeleteTransaction}
+                        handleUpdateTransaction={this.handleUpdateTransaction}
+                      />
+                    ))
+                  }
+                </div>
+
                 <div className="message-header money-out-header">
                   <p><i className="fas fa-plus-circle"></i> Life & entertainment</p>
                 </div>
+                <div className="message-body">
+                  {accounts && 
+                  <NewTransactionForm 
+                    accountId={selectedAccountId}
+                    handleSubmitNewTransaction={this.handleSubmitNewTransaction}
+                    placeholder="e.g eating out"
+                    category="entertainment"
+                  />
+                  }
+                </div>
+                <div className="message-body">
+                  {accounts.length > 0 && 
+                    this.transactionFilter('entertainment').map(transaction => (
+                      <EditTransactionForm 
+                        key={transaction.id}
+                        { ...transaction }
+                        handleDeleteTransaction={this.handleDeleteTransaction}
+                        handleUpdateTransaction={this.handleUpdateTransaction}
+                      />
+                    ))
+                  }
+                </div>
+
                 <div className="message-header money-out-header">
                   <p><i className="fas fa-plus-circle"></i> Insurance</p>
                 </div>
+                <div className="message-body">
+                  {accounts && 
+                  <NewTransactionForm 
+                    accountId={selectedAccountId}
+                    handleSubmitNewTransaction={this.handleSubmitNewTransaction}
+                    placeholder="e.g car insurance"
+                    category="insurance"
+                  />
+                  }
+                </div>
+                <div className="message-body">
+                  {accounts.length > 0 && 
+                    this.transactionFilter('insurance').map(transaction => (
+                      <EditTransactionForm 
+                        key={transaction.id}
+                        { ...transaction }
+                        handleDeleteTransaction={this.handleDeleteTransaction}
+                        handleUpdateTransaction={this.handleUpdateTransaction}
+                      />
+                    ))
+                  }
+                </div>
+
                 <div className="message-header money-out-header">
                   <p><i className="fas fa-plus-circle"></i> Credit cards & loans</p>
                 </div>
+                <div className="message-body">
+                  {accounts && 
+                  <NewTransactionForm 
+                    accountId={selectedAccountId}
+                    handleSubmitNewTransaction={this.handleSubmitNewTransaction}
+                    placeholder="e.g credit card"
+                    category="loan-repayments"
+                  />
+                  }
+                </div>
+                <div className="message-body">
+                  {accounts.length > 0 && 
+                    this.transactionFilter('loan-repayments').map(transaction => (
+                      <EditTransactionForm 
+                        key={transaction.id}
+                        { ...transaction }
+                        handleDeleteTransaction={this.handleDeleteTransaction}
+                        handleUpdateTransaction={this.handleUpdateTransaction}
+                      />
+                    ))
+                  }
+                </div>
+
                 <div className="message-header money-out-header">
                   <p><i className="fas fa-plus-circle"></i> Other</p>
                 </div>
+                <div className="message-body">
+                  {accounts && 
+                  <NewTransactionForm 
+                    accountId={selectedAccountId}
+                    handleSubmitNewTransaction={this.handleSubmitNewTransaction}
+                    placeholder="e.g anything"
+                    category="other"
+                  />
+                  }
+                </div>
+                <div className="message-body">
+                  {accounts.length > 0 && 
+                    this.transactionFilter('other').map(transaction => (
+                      <EditTransactionForm 
+                        key={transaction.id}
+                        { ...transaction }
+                        handleDeleteTransaction={this.handleDeleteTransaction}
+                        handleUpdateTransaction={this.handleUpdateTransaction}
+                      />
+                    ))
+                  }
+                </div>
+
               </div>
 
 
