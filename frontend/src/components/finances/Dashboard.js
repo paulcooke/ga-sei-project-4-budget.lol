@@ -4,6 +4,7 @@ import Auth from '../../lib/auth'
 
 import NewAccountForm from './NewAccountForm'
 import ManageAccounts from './ManageAccounts'
+import ManageMoneyIn from './ManageMoneyIn'
 import NewTransactionForm from './NewTransactionForm'
 import EditTransactionForm from './EditTransactionForm'
 
