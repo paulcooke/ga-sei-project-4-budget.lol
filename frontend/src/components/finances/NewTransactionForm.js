@@ -55,119 +55,122 @@ class NewTransactionForm extends React.Component {
 
     const { transaction } = this.state
     return (
-      <form className="list-payment"
-        onSubmit={(e) => {
-          e.preventDefault()
-          console.log(this.props.accountId, transaction)
-          this.props.handleSubmitNewTransaction(this.props.accountId, transaction)
-          this.resetState()
-        }}>
+      <>
+        <small>add new transaction</small>
+        <form className="list-payment"
+          onSubmit={(e) => {
+            e.preventDefault()
+            console.log(this.props.accountId, transaction)
+            this.props.handleSubmitNewTransaction(this.props.accountId, transaction)
+            this.resetState()
+          }}>
 
-        <div className="form-field">
-          <div className="control">
-            <input
-              className="input"
-              type="text"
-              name="name"
-              placeholder={this.props.placeholder}
-              onChange={this.handleChange}
-              value={transaction.name}
-            />
+          <div className="form-field">
+            <div className="control">
+              <input
+                className="input"
+                type="text"
+                name="name"
+                placeholder={this.props.placeholder}
+                onChange={this.handleChange}
+                value={transaction.name}
+              />
+            </div>
           </div>
-        </div>
 
-        <div className="form-field specific-date-field">
-          <div className="select">
-            <select name="recurrance" onChange={this.handleChange} value={transaction.recurrance}>
-              <option value="" disabled>select recurrance</option>
-              <option value="weekly">weekly</option>
-              <option value="monthly">monthly</option>
-              <option value="one-off">one-off</option>
-            </select>
+          <div className="form-field specific-date-field">
+            <div className="select">
+              <select name="recurrance" onChange={this.handleChange} value={transaction.recurrance}>
+                <option value="" disabled>select recurrance</option>
+                <option value="weekly">weekly</option>
+                <option value="monthly">monthly</option>
+                <option value="one-off">one-off</option>
+              </select>
+            </div>
           </div>
-        </div>
 
-        {transaction.recurrance === 'weekly' &&
-          <>
-            <div>on</div>
-            <div className="form-field specific-date-field">
-              <div className="select">
-                <select name="day_of_week" onChange={this.handleChange} value={transaction.day_of_week}>
-                  <option value="" disabled>choose day</option>
-                  <option value="monday">monday</option>
-                  <option value="tuesday">tuesday</option>
-                  <option value="wednesday">wednesday</option>
-                  <option value="thursday">thursday</option>
-                  <option value="friday">friday</option>
-                  <option value="saturday">saturday</option>
-                  <option value="sunday">sunday</option>
-                </select>
+          {transaction.recurrance === 'weekly' &&
+            <>
+              <div>on</div>
+              <div className="form-field specific-date-field">
+                <div className="select">
+                  <select name="day_of_week" onChange={this.handleChange} value={transaction.day_of_week}>
+                    <option value="" disabled>choose day</option>
+                    <option value="monday">monday</option>
+                    <option value="tuesday">tuesday</option>
+                    <option value="wednesday">wednesday</option>
+                    <option value="thursday">thursday</option>
+                    <option value="friday">friday</option>
+                    <option value="saturday">saturday</option>
+                    <option value="sunday">sunday</option>
+                  </select>
+                </div>
               </div>
-            </div>
-          </>
-        }
+            </>
+          }
 
-        {transaction.recurrance === 'monthly' &&
-          <>
-            <div>on</div>
-            <div className="form-field specific-date-field">
-              <div className="control">
-                <input
-                  className="input"
-                  name="date_in_month"
-                  type="number"
-                  max="28"
-                  value={transaction.date_in_month}
-                  onChange={this.handleChange}
-                  placeholder="date (28 or below)"
-                />
+          {transaction.recurrance === 'monthly' &&
+            <>
+              <div>on</div>
+              <div className="form-field specific-date-field">
+                <div className="control">
+                  <input
+                    className="input"
+                    name="date_in_month"
+                    type="number"
+                    max="28"
+                    value={transaction.date_in_month}
+                    onChange={this.handleChange}
+                    placeholder="date (28 or below)"
+                  />
+                </div>
               </div>
-            </div>
-          </>
-        }
+            </>
+          }
 
-        {transaction.recurrance === 'one-off' &&
-          <>
-            <div>on</div>
-            <div className="form-field specific-date-field">
-              <div className="control">
-                <input
-                  className="input"
-                  name="one_off_date"
-                  type="date"
-                  value={transaction.one_off_date}
-                  onChange={this.handleChange}
-                />
+          {transaction.recurrance === 'one-off' &&
+            <>
+              <div>on</div>
+              <div className="form-field specific-date-field">
+                <div className="control">
+                  <input
+                    className="input"
+                    name="one_off_date"
+                    type="date"
+                    value={transaction.one_off_date}
+                    onChange={this.handleChange}
+                  />
+                </div>
               </div>
-            </div>
-          </>
-        }
+            </>
+          }
 
-        { transaction.name !== '' && 
-          transaction.recurrance !== '' &&
-          (transaction.day_of_week !== '' || transaction.date_in_month !== '' || transaction.one_off_date !== '') &&
-          <>
-            <i className="fas fa-pound-sign"></i>
-            <div className="form-field money-field">
-              <div className="control">
-                <input
-                  className="input"
-                  name="amount"
-                  type="number"
-                  value={transaction.amount}
-                  onChange={this.handleChange}
-                  placeholder="how much"
-                />
+          { transaction.name !== '' && 
+            transaction.recurrance !== '' &&
+            (transaction.day_of_week !== '' || transaction.date_in_month !== '' || transaction.one_off_date !== '') &&
+            <>
+              <i className="fas fa-pound-sign"></i>
+              <div className="form-field money-field">
+                <div className="control">
+                  <input
+                    className="input"
+                    name="amount"
+                    type="number"
+                    value={transaction.amount}
+                    onChange={this.handleChange}
+                    placeholder="how much"
+                  />
+                </div>
               </div>
-            </div>
-          </>
-        }
+            </>
+          }
 
-        {transaction.amount !== '' && 
-          <button className="button" type="submit">add</button>
-        }
+          {transaction.amount !== '' && 
+            <button className="button" type="submit">add</button>
+          }
 
-      </form>
+        </form>
+      </>
     )
   }
   

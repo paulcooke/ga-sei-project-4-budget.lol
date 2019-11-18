@@ -57,6 +57,14 @@ class Dashboard extends React.Component {
       .catch(err => console.log(err.message))
   }
 
+  handleUpdateTransaction(transactionId, transaction) {
+    axios.put(`/api/futuretransactions/${transactionId}`, { ...transaction }, {
+      headers: { Authorization: `Bearer ${Auth.getToken()}` }
+    })
+      .then(() => this.getDashboardInfo())
+      .catch(err => console.log(err.message))
+  }
+
   handleDeleteTransaction(transactionId) {
     axios.delete(`/api//futuretransactions/${transactionId}`, {
       headers: { Authorization: `Bearer ${Auth.getToken()}` }
@@ -137,12 +145,14 @@ class Dashboard extends React.Component {
                   }
                 </div>
                 <div className="message-body">
+                  <small>edit transactions</small>
                   {accounts.length > 0 && 
                     this.transactionFilter('utilities').map(transaction => (
                       <EditTransactionForm 
                         key={transaction.id}
                         { ...transaction }
                         handleDeleteTransaction={this.handleDeleteTransaction}
+                        handleUpdateTransaction={this.handleUpdateTransaction}
                       />
                     ))
                   }
