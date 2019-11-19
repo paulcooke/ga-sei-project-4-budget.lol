@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React from 'react'
 
 class NewAccountForm extends React.Component{
