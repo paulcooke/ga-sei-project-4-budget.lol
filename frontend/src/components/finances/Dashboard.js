@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React from 'react'
 import axios from 'axios'
 import Auth from '../../lib/auth'
@@ -28,8 +29,11 @@ class Dashboard extends React.Component {
       },
       mainChartSettings: {
         dateAxis: [],
-        dateAxisLength: 89
-      }
+        dateAxisLength: 89,
+        runningTotal: []
+      },
+      paymentsOutSeries: {},
+      paymentsInSeries: {},
     }
 
     this.categories = {
@@ -74,7 +78,60 @@ class Dashboard extends React.Component {
         const mainChartSettings = { ...this.state.mainChartSettings, dateAxis: ChartHelpers.makeDateLine(this.state.mainChartSettings.dateAxisLength) }
         this.setState({ mainChartSettings })
       })
+      .then(() => this.makePaymentsSeries())
+      .then(() => this.makeRunningTotal())
       .catch(err => console.log(err.message))
+  }
+
+
+  makePaymentsSeries() {
+    const transactions = this.state.accounts.find(account => account.is_main_account === true).future_transactions
+    const paymentsOutSeries = {}
+    const paymentsInSeries = {}
+    transactions.forEach(transaction => {
+      const { transaction_is_debit, recurrance, name, amount, day_of_week, date_in_month } = transaction
+      if (transaction_is_debit) {
+        if (recurrance === 'weekly') {
+          paymentsOutSeries[name] = ChartHelpers.paymentsOnDays(day_of_week, -amount)
+        } else if (recurrance === 'monthly') {
+          paymentsOutSeries[name] = ChartHelpers.paymentsOnDates(date_in_month, -amount)
+        } else if (recurrance === 'monthly') {
+          paymentsOutSeries[name] = ChartHelpers.paymentsOneOff(date_in_month, -amount)
+        }
+      } else if (!transaction_is_debit) {
+        if (recurrance === 'weekly') {
+          paymentsInSeries[name] = ChartHelpers.paymentsOnDays(day_of_week, amount)
+        } else if (recurrance === 'monthly') {
+          paymentsInSeries[name] = ChartHelpers.paymentsOnDates(date_in_month, amount)
+        } else if (recurrance === 'monthly') {
+          paymentsInSeries[name] = ChartHelpers.paymentsOneOff(date_in_month, amount)
+        }
+      }
+    })
+    this.setState({ paymentsOutSeries, paymentsInSeries })
+  }
+
+  makeRunningTotal() {
+    const outCombined = []
+    const inCombined = []
+    for (const payment in this.state.paymentsOutSeries) {
+      outCombined.push(this.state.paymentsOutSeries[payment])
+    }
+    const outLine = outCombined.reduce((r, a) => a.map((b, i) => (r[i] || 0) + b), [])
+    for (const payment in this.state.paymentsInSeries) {
+      inCombined.push(this.state.paymentsInSeries[payment])
+    }
+    const inLine = inCombined.reduce((r, a) => a.map((b, i) => (r[i] || 0) + b), [])
+    const changeLine = [inLine, outLine].reduce((r, a) => a.map((b, i) => (r[i] || 0) + b), [])
+    changeLine[0] += this.state.accounts[0].current_balance
+    const runningTotal = changeLine.reduce(function(r, a) {
+      if (r.length > 0)
+        a += Math.round(r[r.length - 1])
+      r.push(a)
+      return r
+    }, [])
+    const mainChartSettings = { ...this.state.mainChartSettings, runningTotal }
+    this.setState({ mainChartSettings })
   }
 
   transactionFilter(transactionCategory) {
@@ -87,12 +144,6 @@ class Dashboard extends React.Component {
     const panels = { ...this.state.panels, [panelName]: !this.state.panels[panelName] }
     this.setState({ panels })
   }
-
-  // handleSelectAccount(e) {
-  //   e.preventDefault()
-  //   console.log(e.target.value)
-  //   this.setState({ selectedAccountId: e.target.value })
-  // }
 
   handleNewAccount(accountDetails) {
     axios.post('/api/accounts', { ...accountDetails }, {
@@ -134,10 +185,14 @@ class Dashboard extends React.Component {
       .catch(err => console.log(err.message))
   }
 
+  
+  // console.log('days test', ChartHelpers.paymentsOnDays())
+  // console.log('dates test', ChartHelpers.paymentsOnDates())
+  // console.log('one-off test', ChartHelpers.paymentsOneOff())
+  // {this.state.accounts.length > 0 && console.log('changeline', this.makeRunningTotal())}
+
   render() {
-    console.log('days test', ChartHelpers.paymentsOnDays())
-    console.log('dates test', ChartHelpers.paymentsOnDates())
-    console.log('one-off test', ChartHelpers.paymentsOneOff())
+    
     console.log('dashboard state', this.state)
     console.log(this.state.selectedAccountId)
     const { accounts, selectedAccountId } = this.state
@@ -202,8 +257,6 @@ class Dashboard extends React.Component {
                     </div>
                   </>
                 }
-                
-                
                 
               </div>
 

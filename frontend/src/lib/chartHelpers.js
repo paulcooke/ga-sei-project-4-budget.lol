@@ -13,12 +13,12 @@ class ChartHelpers {
     return dayRange
   }
 
-  static paymentsOnDays() {
-    const day_of_week = 'thursday'
+  static paymentsOnDays(day_of_week, amount) {
+    // const day_of_week = 'thursday'
     const exampleDateLine = this.makeDateLine(89)
     const paymentsArray = exampleDateLine.map(date => {
       if (moment(date).format('dddd').toLowerCase() === day_of_week) {
-        return 5
+        return amount
       } else {
         return 0
       }
@@ -26,12 +26,12 @@ class ChartHelpers {
     return paymentsArray
   }
 
-  static paymentsOnDates() {
-    const date_in_month = 20
+  static paymentsOnDates(date_in_month, amount) {
+    // const date_in_month = 20
     const exampleDateLine = this.makeDateLine(89)
     const paymentsArray = exampleDateLine.map(date => {
       if (moment(date).get('date') === parseInt(date_in_month)) {
-        return 20
+        return amount
       } else {
         return 0
       }
@@ -39,12 +39,12 @@ class ChartHelpers {
     return paymentsArray
   }
 
-  static paymentsOneOff() {
-    const one_off_date = '2019-11-30'
+  static paymentsOneOff(one_off_date, amount) {
+    // const one_off_date = '2019-11-30'
     const exampleDateLine = this.makeDateLine(89)
     const paymentsArray = exampleDateLine.map(date => {
       if (moment(date).format('YYYY-MM-DD') === one_off_date) {
-        return 'banana'
+        return amount
       } else {
         return 0
       }
