@@ -36,7 +36,6 @@ class EditTransactionForm extends React.Component {
     const day_of_week = (name === 'day_of_week' && this.state.transaction.recurrance === 'weekly') ? value : (name === 'recurrance' && value !== 'weekly') ? '' : this.state.transaction.day_of_week
     const date_in_month = (name === 'date_in_month' && this.state.transaction.recurrance === 'monthly') ? value : (name === 'recurrance' && value !== 'monthly') ? null : this.state.transaction.date_in_month
     const one_off_date = (name === 'one_off_date' && this.state.transaction.recurrance === 'one-off') ? value : (name === 'recurrance' && value !== 'one-off') ? null : this.state.transaction.one_off_date
-    
     const transaction = { 
       ...this.state.transaction, 
       [name]: value,

@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import Auth from '../../lib/auth'
+import ChartHelpers from '../../lib/chartHelpers'
 
 import NewAccountForm from './NewAccountForm'
 import ManageAccounts from './ManageAccounts'
@@ -24,6 +25,10 @@ class Dashboard extends React.Component {
         credit: false,
         other: false,
         moneyIn: false
+      },
+      mainChartSettings: {
+        dateAxis: [],
+        dateAxisLength: 89
       }
     }
 
@@ -64,6 +69,10 @@ class Dashboard extends React.Component {
           const selectedAccountId = this.state.accounts.find(account => account.is_main_account === true).id
           this.setState({ selectedAccountId })
         }
+      })
+      .then(() => {
+        const mainChartSettings = { ...this.state.mainChartSettings, dateAxis: ChartHelpers.makeDateLine(this.state.mainChartSettings.dateAxisLength) }
+        this.setState({ mainChartSettings })
       })
       .catch(err => console.log(err.message))
   }
@@ -126,6 +135,9 @@ class Dashboard extends React.Component {
   }
 
   render() {
+    console.log('days test', ChartHelpers.paymentsOnDays())
+    console.log('dates test', ChartHelpers.paymentsOnDates())
+    console.log('one-off test', ChartHelpers.paymentsOneOff())
     console.log('dashboard state', this.state)
     console.log(this.state.selectedAccountId)
     const { accounts, selectedAccountId } = this.state
