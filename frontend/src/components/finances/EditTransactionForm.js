@@ -29,11 +29,13 @@ class EditTransactionForm extends React.Component {
     this.setState({ transaction: transaction })
   }
 
+  // the day_of_week, date_in_month & one_off_date fields need to update correctly if changed, keep their state value if something else changes, and clear their values if recurrance changes
+  // needed to prevent it being possible to submit transaction edits with more than one of these fields populated, which would ruin the transaction entry by making it impossible to understand which recurrance/date was chosen
   handleChange({ target: { name, value } }) {
-    const day_of_week = (name === 'day_of_week' && this.state.transaction.recurrance === 'weekly') ? value : this.state.transaction.day_of_week
-    const date_in_month = (name === 'date_in_month' && this.state.transaction.recurrance === 'monthly') ? value : this.state.transaction.date_in_month
-    const one_off_date = (name === 'one_off_date' && this.state.transaction.recurrance === 'one-off') ? value : this.state.transaction.one_off_date
-    // const annual_date = name === 'recurrance' && value === 'one-off' ? value : null
+    const day_of_week = (name === 'day_of_week' && this.state.transaction.recurrance === 'weekly') ? value : (name === 'recurrance' && value !== 'weekly') ? '' : this.state.transaction.day_of_week
+    const date_in_month = (name === 'date_in_month' && this.state.transaction.recurrance === 'monthly') ? value : (name === 'recurrance' && value !== 'monthly') ? null : this.state.transaction.date_in_month
+    const one_off_date = (name === 'one_off_date' && this.state.transaction.recurrance === 'one-off') ? value : (name === 'recurrance' && value !== 'one-off') ? null : this.state.transaction.one_off_date
+    
     const transaction = { 
       ...this.state.transaction, 
       [name]: value,
