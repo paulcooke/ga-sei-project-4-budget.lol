@@ -8,6 +8,7 @@ import NewAccountForm from './NewAccountForm'
 import ManageAccounts from './ManageAccounts'
 import NewTransactionForm from './NewTransactionForm'
 import EditTransactionForm from './EditTransactionForm'
+import RunningTotalChart from '../charts/RunningTotalChart'
 
 class Dashboard extends React.Component {
   constructor() {
@@ -33,7 +34,8 @@ class Dashboard extends React.Component {
         runningTotal: []
       },
       paymentsOutSeries: {},
-      paymentsInSeries: {},
+      paymentsInSeries: {}
+
     }
 
     this.categories = {
@@ -49,7 +51,6 @@ class Dashboard extends React.Component {
       ]
     }
 
-    // this.handleSelectAccount = this.handleSelectAccount.bind(this)
     this.handleSubmitNewTransaction = this.handleSubmitNewTransaction.bind(this) 
     this.handleUpdateTransaction = this.handleUpdateTransaction.bind(this) 
     this.handleDeleteTransaction = this.handleDeleteTransaction.bind(this) 
@@ -67,7 +68,7 @@ class Dashboard extends React.Component {
       headers: { Authorization: `Bearer ${Auth.getToken()}` }
     })
       .then(res => this.setState({ accounts: res.data }))
-      // below is in preparation for multiple accounts, sets initial account ot display.
+      // below is in preparation for multiple accounts, sets initial account to display.
       .then(() => {
         if (this.state.selectedAccountId === '') {
           const selectedAccountId = this.state.accounts.find(account => account.is_main_account === true).id
@@ -89,22 +90,22 @@ class Dashboard extends React.Component {
     const paymentsOutSeries = {}
     const paymentsInSeries = {}
     transactions.forEach(transaction => {
-      const { transaction_is_debit, recurrance, name, amount, day_of_week, date_in_month } = transaction
+      const { transaction_is_debit, recurrance, name, amount, day_of_week, date_in_month, one_off_date } = transaction
       if (transaction_is_debit) {
         if (recurrance === 'weekly') {
           paymentsOutSeries[name] = ChartHelpers.paymentsOnDays(day_of_week, -amount)
         } else if (recurrance === 'monthly') {
           paymentsOutSeries[name] = ChartHelpers.paymentsOnDates(date_in_month, -amount)
-        } else if (recurrance === 'monthly') {
-          paymentsOutSeries[name] = ChartHelpers.paymentsOneOff(date_in_month, -amount)
+        } else if (recurrance === 'one-off') {
+          paymentsOutSeries[name] = ChartHelpers.paymentsOneOff(one_off_date, -amount)
         }
       } else if (!transaction_is_debit) {
         if (recurrance === 'weekly') {
           paymentsInSeries[name] = ChartHelpers.paymentsOnDays(day_of_week, amount)
         } else if (recurrance === 'monthly') {
           paymentsInSeries[name] = ChartHelpers.paymentsOnDates(date_in_month, amount)
-        } else if (recurrance === 'monthly') {
-          paymentsInSeries[name] = ChartHelpers.paymentsOneOff(date_in_month, amount)
+        } else if (recurrance === 'one-off') {
+          paymentsInSeries[name] = ChartHelpers.paymentsOneOff(one_off_date, amount)
         }
       }
     })
@@ -114,16 +115,32 @@ class Dashboard extends React.Component {
   makeRunningTotal() {
     const outCombined = []
     const inCombined = []
+    // loop through transactions object and push the payments out arrays in
     for (const payment in this.state.paymentsOutSeries) {
       outCombined.push(this.state.paymentsOutSeries[payment])
     }
     const outLine = outCombined.reduce((r, a) => a.map((b, i) => (r[i] || 0) + b), [])
+    console.log('=> outline test', outLine)
+    
+    // same for payments in
     for (const payment in this.state.paymentsInSeries) {
       inCombined.push(this.state.paymentsInSeries[payment])
     }
     const inLine = inCombined.reduce((r, a) => a.map((b, i) => (r[i] || 0) + b), [])
-    const changeLine = [inLine, outLine].reduce((r, a) => a.map((b, i) => (r[i] || 0) + b), [])
+    console.log('=> inline test', inLine)
+    // combine the two into an array that can be used to make a running total
+
+    let changeLine
+    if (outLine.length > 0) {
+      changeLine = [inLine, outLine].reduce((r, a) => a.map((b, i) => (r[i] || 0) + b), [])
+    } else {
+      changeLine = inLine
+    }
+    
+    // add current balance to first value of changeLine
     changeLine[0] += this.state.accounts[0].current_balance
+    console.log('changeLine test', changeLine)
+
     const runningTotal = changeLine.reduce(function(r, a) {
       if (r.length > 0)
         a += Math.round(r[r.length - 1])
@@ -260,8 +277,10 @@ class Dashboard extends React.Component {
                 
               </div>
 
-              <div className="box">
-                <h2 className="title is-3">Graph will go here</h2>
+              <div className="chart-container">
+                <RunningTotalChart 
+                  { ...this.state.mainChartSettings }
+                />
               </div>
 
               <h3 className="title is-3">Money Out</h3>

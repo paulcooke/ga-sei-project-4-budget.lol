@@ -31,6 +31,7 @@ class ChartHelpers {
     const exampleDateLine = this.makeDateLine(89)
     const paymentsArray = exampleDateLine.map(date => {
       if (moment(date).get('date') === parseInt(date_in_month)) {
+        
         return amount
       } else {
         return 0
@@ -43,7 +44,7 @@ class ChartHelpers {
     // const one_off_date = '2019-11-30'
     const exampleDateLine = this.makeDateLine(89)
     const paymentsArray = exampleDateLine.map(date => {
-      if (moment(date).format('YYYY-MM-DD') === one_off_date) {
+      if (moment(date).format('YYYY-MM-DD') === moment(one_off_date).format('YYYY-MM-DD')) {
         return amount
       } else {
         return 0
