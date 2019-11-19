@@ -34,7 +34,7 @@ class LoginView(APIView):
 
         if not user.check_password(password):
             raise PermissionDenied({'message': 'Invalid Credentials'})
-        
+
         dt = datetime.now() + timedelta(days=1)
         token = jwt.encode({'sub': user.id, 'exp': int(dt.strftime('%s'))}, settings.SECRET_KEY, algorithm='HS256')
         return Response({'token': token, 'message': f'Welcome back {user.username}'})

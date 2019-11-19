@@ -1,7 +1,7 @@
 # pylint: disable=no-member
 # from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.views import APIView
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from rest_framework import permissions
 from rest_framework.response import Response
 from .models import Account, FutureTransactions
