@@ -7,6 +7,7 @@ class RunningTotalChart extends React.Component {
     super(props)
 
     this.state = {
+      views: '3m',
       options: {
         chart: {
           height: '65%'
@@ -89,28 +90,36 @@ class RunningTotalChart extends React.Component {
           {this.props.runningTotal.length > 1 && 
             <>
               <div>
-                <button className="button is-success is-small is-light"
+                <button className={`button is-success is-small${this.state.views !== '1m' ? ' is-light' : ''}`}
                   onClick={(e) => {
                     e.preventDefault()
                     this.props.handleViewSelect(30)
+                    const views = '1m'
+                    this.setState({ views })
                   }}
                 >1 month</button><span> </span>
-                <button className="button is-success is-small is-light"
+                <button className={`button is-success is-small${this.state.views !== '3m' ? ' is-light' : ''}`}
                   onClick={(e) => {
                     e.preventDefault()
                     this.props.handleViewSelect(90)
+                    const views = '3m'
+                    this.setState({ views })
                   }}
                 >3 months</button><span> </span>
-                <button className="button is-success is-small is-light"
+                <button className={`button is-success is-small${this.state.views !== '6m' ? ' is-light' : ''}`}
                   onClick={(e) => {
                     e.preventDefault()
                     this.props.handleViewSelect(180)
+                    const views = '6m'
+                    this.setState({ views })
                   }}
                 >6 months</button><span> </span>
-                <button className="button is-success is-small is-light"
+                <button className={`button is-success is-small${this.state.views !== '1y' ? ' is-light' : ''}`}
                   onClick={(e) => {
                     e.preventDefault()
                     this.props.handleViewSelect(365)
+                    const views = '1y'
+                    this.setState({ views })
                   }}
                 >1 year</button>
               </div>
