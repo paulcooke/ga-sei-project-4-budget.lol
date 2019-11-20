@@ -80,18 +80,46 @@ class RunningTotalChart extends React.Component {
     return (
       <div className="columns is-centered">
         <div className="column is-four-fifths">
-          {this.props.runningTotal.length == 1 &&
+          {this.props.runningTotal.length === 1 &&
             <>
               <h3 className="title is-6">When you start adding your income & costs your balance calculation will appear here</h3>
               <br/>
             </>
           }
           {this.props.runningTotal.length > 1 && 
-            <HighchartsReact 
-              highcharts={Highcharts}
-              options={this.state.options}
-              allowChartUpdate = { true }
-            />
+            <>
+              <div>
+                <button className="button is-success is-small is-light"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    this.props.handleViewSelect(30)
+                  }}
+                >1 month</button><span> </span>
+                <button className="button is-success is-small is-light"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    this.props.handleViewSelect(90)
+                  }}
+                >3 months</button><span> </span>
+                <button className="button is-success is-small is-light"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    this.props.handleViewSelect(180)
+                  }}
+                >6 months</button><span> </span>
+                <button className="button is-success is-small is-light"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    this.props.handleViewSelect(365)
+                  }}
+                >1 year</button>
+              </div>
+              <HighchartsReact 
+                highcharts={Highcharts}
+                options={this.state.options}
+                allowChartUpdate = { true }
+              />
+            </>
           }
         </div>
       </div>

@@ -57,6 +57,7 @@ class Dashboard extends React.Component {
     this.handleNewAccount = this.handleNewAccount.bind(this) 
     this.handleUpdateAccount = this.handleUpdateAccount.bind(this) 
     this.handlePanels = this.handlePanels.bind(this)
+    this.handleViewSelect = this.handleViewSelect.bind(this)
   }
 
   componentDidMount() {
@@ -160,6 +161,12 @@ class Dashboard extends React.Component {
     console.log(this.state.panels[panelName])
     const panels = { ...this.state.panels, [panelName]: !this.state.panels[panelName] }
     this.setState({ panels })
+  }
+
+  handleViewSelect(numDays) {
+    const mainChartSettings = { ...this.state.mainChartSettings, dateAxisLength: numDays }
+    this.setState({ mainChartSettings })
+    this.getDashboardInfo()
   }
 
   handleNewAccount(accountDetails) {
@@ -280,6 +287,7 @@ class Dashboard extends React.Component {
               <div className="chart-container">
                 <RunningTotalChart 
                   { ...this.state.mainChartSettings }
+                  handleViewSelect={this.handleViewSelect}
                 />
               </div>
 
