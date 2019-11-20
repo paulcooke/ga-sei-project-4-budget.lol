@@ -49,14 +49,23 @@ class RunningTotalChart extends React.Component {
   componentDidUpdate(prevProps) {
     if (this.props !== prevProps) {
       const xAxis = { 
-        categories: this.props.dateAxis
+        categories: this.props.dateAxis,
+        title: {
+          text: 'date'
+        }
       }
-      const series = {
-        data: this.props.runningTotal
-      }
+      const series = [{
+        name: 'running total',
+        data: this.props.runningTotal,
+        step: 'left',
+        marker: {
+          enabled: false
+        },
+        lineWidth: 3
+      }]
       const options = { ...this.state.options, 
-        xAxis: { ...this.state.options[xAxis], categories: this.props.dateAxis },
-        series: { ...this.state.options[series], data: this.props.runningTotal }
+        xAxis,
+        series
       }
       this.setState({ options })
     }

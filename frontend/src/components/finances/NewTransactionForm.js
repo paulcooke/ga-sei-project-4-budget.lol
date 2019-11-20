@@ -39,8 +39,6 @@ class NewTransactionForm extends React.Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
-
-
   handleChange({ target: { name, value } }) {
     const day_of_week = (name === 'day_of_week' && this.state.transaction.recurrance === 'weekly') ? value : (name === 'recurrance' && value !== 'weekly') ? '' : this.state.transaction.day_of_week
     const date_in_month = (name === 'date_in_month' && this.state.transaction.recurrance === 'monthly') ? value : (name === 'recurrance' && value !== 'monthly') ? null : this.state.transaction.date_in_month
