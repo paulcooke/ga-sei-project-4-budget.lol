@@ -63,7 +63,7 @@ class ManageAccounts extends React.Component {
           </div>
           <button className="button" type="submit">update</button>
         </form>
-        <small><i className="fas fa-exclamation-circle"></i> for the best experience always update your current balance</small>
+        <small><i className="fas fa-exclamation-circle"></i> for the best experience always update your current balance as it is today</small>
       </>
     )
   }

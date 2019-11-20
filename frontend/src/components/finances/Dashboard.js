@@ -93,19 +93,19 @@ class Dashboard extends React.Component {
       const { transaction_is_debit, recurrance, name, amount, day_of_week, date_in_month, one_off_date } = transaction
       if (transaction_is_debit) {
         if (recurrance === 'weekly') {
-          paymentsOutSeries[name] = ChartHelpers.paymentsOnDays(day_of_week, -amount)
+          paymentsOutSeries[name] = ChartHelpers.paymentsOnDays(day_of_week, -amount, this.state.mainChartSettings.dateAxis)
         } else if (recurrance === 'monthly') {
-          paymentsOutSeries[name] = ChartHelpers.paymentsOnDates(date_in_month, -amount)
+          paymentsOutSeries[name] = ChartHelpers.paymentsOnDates(date_in_month, -amount, this.state.mainChartSettings.dateAxis)
         } else if (recurrance === 'one-off') {
-          paymentsOutSeries[name] = ChartHelpers.paymentsOneOff(one_off_date, -amount)
+          paymentsOutSeries[name] = ChartHelpers.paymentsOneOff(one_off_date, -amount, this.state.mainChartSettings.dateAxis)
         }
       } else if (!transaction_is_debit) {
         if (recurrance === 'weekly') {
-          paymentsInSeries[name] = ChartHelpers.paymentsOnDays(day_of_week, amount)
+          paymentsInSeries[name] = ChartHelpers.paymentsOnDays(day_of_week, amount, this.state.mainChartSettings.dateAxis)
         } else if (recurrance === 'monthly') {
-          paymentsInSeries[name] = ChartHelpers.paymentsOnDates(date_in_month, amount)
+          paymentsInSeries[name] = ChartHelpers.paymentsOnDates(date_in_month, amount, this.state.mainChartSettings.dateAxis)
         } else if (recurrance === 'one-off') {
-          paymentsInSeries[name] = ChartHelpers.paymentsOneOff(one_off_date, amount)
+          paymentsInSeries[name] = ChartHelpers.paymentsOneOff(one_off_date, amount, this.state.mainChartSettings.dateAxis)
         }
       }
     })
@@ -217,7 +217,7 @@ class Dashboard extends React.Component {
       <section className="section">
         <div className="columns is-centered">
           <div className="column is-four-fifths">
-            <h1 className="title is-2">Time to budget, lol.</h1>
+            <h1 className="title is-2">Hi{accounts.length > 0 && ` ${accounts[0].user.username}`}. Time to do your 3 minute budget.</h1>
             <div>
 
               <div className="message is-info">

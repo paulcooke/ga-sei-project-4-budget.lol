@@ -9,7 +9,7 @@ class RunningTotalChart extends React.Component {
     this.state = {
       options: {
         chart: {
-          height: '75%'
+          height: '65%'
         },
         title: {
           text: 'Your balance'
@@ -61,11 +61,6 @@ class RunningTotalChart extends React.Component {
       this.setState({ options })
     }
   }
-  
-
-  
-
-
 
   render() {
     console.log(this.props.dateAxis)
@@ -76,11 +71,13 @@ class RunningTotalChart extends React.Component {
     return (
       <div className="columns is-centered">
         <div className="column is-four-fifths">
-          <HighchartsReact 
-            highcharts={Highcharts}
-            options={this.state.options}
-            allowChartUpdate = { true }
-          />
+          {this.props.runningTotal.length > 1 && 
+            <HighchartsReact 
+              highcharts={Highcharts}
+              options={this.state.options}
+              allowChartUpdate = { true }
+            />
+          }
         </div>
       </div>
     )

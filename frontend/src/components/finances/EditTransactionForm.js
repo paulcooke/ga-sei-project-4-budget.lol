@@ -14,20 +14,22 @@ class EditTransactionForm extends React.Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
-  componentDidMount() {
-    const transaction = {
-      recurrance: this.props.recurrance,
-      name: this.props.name,
-      day_of_week: this.props.day_of_week,
-      date_in_month: this.props.date_in_month,
-      one_off_date: this.props.one_off_date,
-      annual_date: this.props.annual_date,
-      amount: this.props.amount,
-      category: this.props.category,
-      transaction_is_debit: this.props.transaction_is_debit,
-      id: this.props.id
+  componentDidUpdate(prevProps) {
+    if (this.props !== prevProps) {
+      const transaction = {
+        recurrance: this.props.recurrance,
+        name: this.props.name,
+        day_of_week: this.props.day_of_week,
+        date_in_month: this.props.date_in_month,
+        one_off_date: this.props.one_off_date,
+        annual_date: this.props.annual_date,
+        amount: this.props.amount,
+        category: this.props.category,
+        transaction_is_debit: this.props.transaction_is_debit,
+        id: this.props.id
+      }
+      this.setState({ transaction: transaction })
     }
-    this.setState({ transaction: transaction })
   }
 
   // the day_of_week, date_in_month & one_off_date fields need to update correctly if changed, keep their state value if something else changes, and clear their values if recurrance changes
