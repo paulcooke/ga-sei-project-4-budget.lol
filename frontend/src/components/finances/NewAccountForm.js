@@ -66,7 +66,7 @@ class NewAccountForm extends React.Component{
             <input
               className="input"
               name="current_balance"
-              type="number"
+              type="float"
               value={current_balance}
               onChange={this.handleChange}
               placeholder="balance"

@@ -168,7 +168,7 @@ class EditTransactionForm extends React.Component {
                     <input
                       className="input"
                       name="amount"
-                      type="number"
+                      type="float"
                       value={amount}
                       onChange={this.handleChange}
                       placeholder="amt"

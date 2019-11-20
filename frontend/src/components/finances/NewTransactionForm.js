@@ -169,7 +169,7 @@ class NewTransactionForm extends React.Component {
                   <input
                     className="input"
                     name="amount"
-                    type="number"
+                    type="float"
                     value={transaction.amount}
                     onChange={this.handleChange}
                     placeholder="how much"
