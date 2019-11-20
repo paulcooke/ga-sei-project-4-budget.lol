@@ -5,10 +5,10 @@ const Home = () => (
     <div className="hero-body">
       <div className="container">
         <p className="title is-1 has-text-centered is-bottom">
-          home page
+          budget.lol
         </p>
         <p className="subtitle is-4 has-text-centered">
-          how it works
+          laughably simple budgetting
         </p>
       </div>
     </div>

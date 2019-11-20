@@ -71,6 +71,12 @@ class RunningTotalChart extends React.Component {
     return (
       <div className="columns is-centered">
         <div className="column is-four-fifths">
+          {this.props.runningTotal.length == 1 &&
+            <>
+              <h3 className="title is-6">When you start adding your income & costs your balance calculation will appear here</h3>
+              <br/>
+            </>
+          }
           {this.props.runningTotal.length > 1 && 
             <HighchartsReact 
               highcharts={Highcharts}
