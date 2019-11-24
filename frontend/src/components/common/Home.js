@@ -8,7 +8,7 @@ const Home = () => (
           budget.lol
         </p>
         <p className="subtitle is-4 has-text-centered">
-          laughably simple budgetting
+          laughably simple budgeting
         </p>
       </div>
     </div>
