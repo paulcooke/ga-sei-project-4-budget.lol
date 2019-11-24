@@ -12,6 +12,7 @@ import Navbar from './components/common/Navbar'
 import Register from './components/auth/Register'
 import Login from './components/auth/Login'
 import Dashboard from './components/finances/Dashboard'
+import SecureRoute from './components/common/SecureRoute'
 
 const App = () => (
   <BrowserRouter>
@@ -19,7 +20,7 @@ const App = () => (
       <Navbar />
       <Switch>
         <Route exact path="/" component={Home}/>
-        <Route path="/dashboard" component={Dashboard}/>
+        <SecureRoute path="/dashboard" component={Dashboard}/>
         <Route path="/register" component={Register}/>
         <Route path="/login" component={Login}/>
       </Switch>

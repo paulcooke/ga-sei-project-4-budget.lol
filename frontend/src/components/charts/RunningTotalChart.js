@@ -10,7 +10,7 @@ class RunningTotalChart extends React.Component {
       views: '3m',
       options: {
         chart: {
-          height: '65%'
+          height: '40%'
         },
         title: {
           text: 'Your balance'
@@ -25,7 +25,7 @@ class RunningTotalChart extends React.Component {
         },
         xAxis: {
           title: {
-            text: 'date'
+            // text: 'date'
           },
           categories: []
         },
@@ -52,7 +52,7 @@ class RunningTotalChart extends React.Component {
       const xAxis = { 
         categories: this.props.dateAxis,
         title: {
-          text: 'date'
+          // text: 'date'
         }
       }
       const series = [{
