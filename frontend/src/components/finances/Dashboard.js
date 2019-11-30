@@ -10,9 +10,6 @@ import NewTransactionForm from './NewTransactionForm'
 import EditTransactionForm from './EditTransactionForm'
 import RunningTotalChart from '../charts/RunningTotalChart'
 
-axios.defaults.xsrfCookieName = 'csrftoken'
-axios.defaults.xsrfHeaderName = 'X-CSRFToken'
-
 class Dashboard extends React.Component {
   constructor() {
     super()
@@ -205,7 +202,7 @@ class Dashboard extends React.Component {
   }
 
   handleDeleteTransaction(transactionId) {
-    axios.delete(`/api//futuretransactions/${transactionId}`, {
+    axios.delete(`/api/futuretransactions/${transactionId}`, {
       headers: { Authorization: `Bearer ${Auth.getToken()}` }
     })
       .then(() => this.getDashboardInfo())

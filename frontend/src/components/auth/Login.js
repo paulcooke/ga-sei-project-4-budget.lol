@@ -2,9 +2,6 @@ import React from 'react'
 import axios from 'axios'
 import Auth from '../../lib/auth'
 
-axios.defaults.xsrfCookieName = 'csrftoken'
-axios.defaults.xsrfHeaderName = 'X-CSRFToken'
-
 class Login extends React.Component {
   constructor() {
     super()
