@@ -25,8 +25,8 @@ class NewAccountForm extends React.Component{
   }
 
   render() {
-    console.log('new account state', this.state)
-    console.log('new account props', this.props)
+    // console.log('new account state', this.state)
+    // console.log('new account props', this.props)
     const { name, bank, current_balance } = this.state.account
     return (
       <form className="manage-account-form"

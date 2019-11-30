@@ -216,9 +216,8 @@ class Dashboard extends React.Component {
   // {this.state.accounts.length > 0 && console.log('changeline', this.makeRunningTotal())}
 
   render() {
-    
-    console.log('dashboard state', this.state)
-    console.log(this.state.selectedAccountId)
+    // console.log('dashboard state', this.state)
+    // console.log(this.state.selectedAccountId)
     const { accounts, selectedAccountId } = this.state
     return (
       <section className="section">

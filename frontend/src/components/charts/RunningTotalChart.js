@@ -73,11 +73,10 @@ class RunningTotalChart extends React.Component {
   }
 
   render() {
-    console.log(this.props.dateAxis)
-    console.log(this.props.runningTotal)
-    console.log('chart props',this.props)
-    console.log('chart state', this.state)
-    console.log('')
+    // console.log(this.props.dateAxis)
+    // console.log(this.props.runningTotal)
+    // console.log('chart props',this.props)
+    // console.log('chart state', this.state)
     return (
       <div className="columns is-centered">
         <div className="column is-four-fifths">

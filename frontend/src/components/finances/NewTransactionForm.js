@@ -63,10 +63,9 @@ class NewTransactionForm extends React.Component {
 
   // leaving yearly recurrance out to start with, will add if there is time
 
-
   render() {
-    console.log('new transaction props', this.props)
-    console.log('new transaction state', this.state)
+    // console.log('new transaction props', this.props)
+    // console.log('new transaction state', this.state)
     const { transaction } = this.state
     return (
       <>

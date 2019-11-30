@@ -28,7 +28,7 @@ class Register extends React.Component {
   }
 
   render() {
-    console.log('render state', this.state)
+    // console.log('render state', this.state)
     const { errors } = this.state
     return (
       <section className="section">
