@@ -1,6 +1,9 @@
 import React from 'react'
 import axios from 'axios'
 
+axios.defaults.xsrfCookieName = 'csrftoken'
+axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+
 class Register extends React.Component {
   constructor() {
     super()

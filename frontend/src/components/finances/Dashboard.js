@@ -10,6 +10,9 @@ import NewTransactionForm from './NewTransactionForm'
 import EditTransactionForm from './EditTransactionForm'
 import RunningTotalChart from '../charts/RunningTotalChart'
 
+axios.defaults.xsrfCookieName = 'csrftoken'
+axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+
 class Dashboard extends React.Component {
   constructor() {
     super()
