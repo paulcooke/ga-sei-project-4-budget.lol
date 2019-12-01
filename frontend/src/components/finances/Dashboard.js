@@ -129,8 +129,8 @@ class Dashboard extends React.Component {
     }
     const inLine = inCombined.reduce((r, a) => a.map((b, i) => (r[i] || 0) + b), [])
     console.log('=> inline test', inLine)
-    // combine the two into an array that can be used to make a running total
-
+    
+    // combine payments in array (inLine) and payments out array (outLine) into an array that can be used to make a running total
     let changeLine
     if (outLine.length > 0) {
       changeLine = [inLine, outLine].reduce((r, a) => a.map((b, i) => (r[i] || 0) + b), [])
