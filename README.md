@@ -67,15 +67,15 @@ Whenever a transaction is created, edited or deleted, the handler that deals wit
 	* The part of the function that combines the payments in and payments out arrays into one running total array:
 	![](readme_assets/running_total_example.png)
 
-### Challenges
-
-* I found it a challenge to very quickly learn Django. It felt very 'big' for this use and whilst there are some very useful things for newbies (such as user models and admin), it is difficult for a beginner to debug and set up correctly
-* Scope. This was a solo project and I initially set out quite an ambitious scope. Some of what I cut is mentioned below under future changes
-
 ### Wins
 * I made the choice to use Highcharts for the graph quite quickly, which meant the models and forms were set up to allow me to produce arrays in the right format for Highcharts
 * Getting the live updating of the chart to work for any of the create, update or delete was satisfying
 * The correct generation of the running total array was also enjoyable to work through
+
+### Challenges
+
+* I found it a challenge to very quickly learn Django. It felt very 'big' for this use and whilst there are some very useful things for newbies (such as user models and admin), it is difficult for a beginner to debug and set up correctly
+* Scope. This was a solo project and I initially set out quite an ambitious scope. Some of what I cut is mentioned below under future changes
 
 ### Future changes & features I would like to add
 * The styling was not a focus as functionality was the priority, I would spend a little more time working on this, especially the responsiveness of the dashboard and its forms and some smaller details (such as visual cues to show the user that 'update transaction' has happened successfully)
