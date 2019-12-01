@@ -6,7 +6,7 @@
 
 
 #### Timeframe: 7 days
-
+---
 ### Technologies used
 * React.js with Highcharts & Moment packages
 * JavaScript (ES6) / HTML5 / CSS3
@@ -30,6 +30,7 @@ The project was created using React.js and Django. For speed I used the Bulma CS
 
 The intention is that it is fast, easy and the effects are instantly visible.
 
+---
 ![](readme_assets/add_first_transactions.gif)
 
 ### Approach
@@ -54,14 +55,14 @@ Whenever a transaction is created, edited or deleted, the handler that deals wit
 	*  The x-axis is an array of date strings
 3. Creates a data series (in the form of an array) for every transaction belonging to the selected account
 	* Each transaction has a recurrance - either weekly, monthly or one-off. If it's weekly it will have a day of week ("Monday" for example), if it's monthly it will have a date in month ("5" for example, max 28), or if it is one-off it will contain a date string for the date of payment
-	* A helper function maps over the newly created x-axis array and checks to see if there is a match on the day of week, date in month or payment date, whichever is relevant. If there is no match, the function will put a 0 at that index in the array it is creating, if there is a match it will put the value of the transaction at that index in the array. So for example, assuming today is Monday and we are making a 14 day array for a weekly transaction with a payment of £65 every Tuesday. It would create an array for this transaction that looks like this: `[0, 65, 0, 0, 0, 0, 0, 0, 65, 0, 0, 0, 0, 0]`
+	* A helper function maps over the newly created x-axis array and checks to see if there is a match on the day of week, date in month or payment date, whichever is relevant. If there is no match, the function will put a 0 at that index in the array it is creating, if there is a match it will put the value of the transaction at that index in the array. So for example, assuming today is Monday and we are making a 14 day array for a weekly transaction with a payment of £65 every Tuesday, it would create an array for this transaction that looks like this: `[0, 65, 0, 0, 0, 0, 0, 0, 65, 0, 0, 0, 0, 0]`
 	* An example of the helper that makes the arrays (weekly payments):
 ![](readme_assets/payment_array_example.png)
 	* When these series are created, they are stored in two objects in state, one called paymentsInSeries (containing positive values), the other paymentsOutSeries (containing negative values).
 4. Combines all the data series into one "running total" data series (also an array)
 	* Once we have our objects containing all the payment arrays, for the main graph they need combining into one payment array
 	* To achieve this the arrays are 'added together' by creating a 2D array and then reducing it to produce a single array with the the sum of all the relevant values at each index, corresponding to the correct date string in the x-axis 
-	* This is done three times. Once to combine the money in, once to combine the money out, and finally to combine these two together
+	* This is done three times. Once to combine the money in, once to combine the money out, and finally to combine these two together before reducing to produce a running total. This is so that I could potential plot money in and money out separately
 	* The start value of the running total is the current balance in the account
 	* The part of the function that combines the payments in and payments out arrays into one running total array:
 	![](readme_assets/running_total_example.png)
@@ -69,16 +70,16 @@ Whenever a transaction is created, edited or deleted, the handler that deals wit
 ### Challenges
 
 * I found it a challenge to very quickly learn Django. It felt very 'big' for this use and whilst there are some very useful things for newbies (such as user models and admin), it is difficult for a beginner to debug and set up correctly
-* Scope. This was a solo project and I initially set out quite an ambitious scope. Some of what I cut is mentioned below under future features
+* Scope. This was a solo project and I initially set out quite an ambitious scope. Some of what I cut is mentioned below under future changes
 
 ### Wins
 * I made the choice to use Highcharts for the graph quite quickly, which meant the models and forms were set up to allow me to produce arrays in the right format for Highcharts
 * Getting the live updating of the chart to work for any of the create, update or delete was satisfying
-* The correct generation of the running total array
+* The correct generation of the running total array was also enjoyable to work through
 
 ### Future changes & features I would like to add
-* The styling was not a focus as functionality was the priority, I would spend a little more time working on this, especially the responsiveness of the dashboard and it's forms and some smaller details (such as visual cues to show the user that 'update transaction' has happened successfully)
-* Multiple accounts, such as saving accounts. I would aim to show the effect of saving over time on a savings balance
+* The styling was not a focus as functionality was the priority, I would spend a little more time working on this, especially the responsiveness of the dashboard and its forms and some smaller details (such as visual cues to show the user that 'update transaction' has happened successfully)
+* Multiple accounts, such as savings accounts. I would aim to show the effect of saving over time from a currrent account on a savings account balance
+* Easy calculations for things like take home pay, mortgage repayments and credit cards/loans
 * More payment summaries by type. I have the data series already being created so would like to use them to present more information to the user
 * Transaction history. This is not the current focus of the app, but would be a logical expansion
-
