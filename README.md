@@ -59,17 +59,17 @@ Whenever a transaction is created, edited or deleted, the handler that deals wit
 	* An example of the helper that makes the arrays (weekly payments):
 
 	```javascript
-	  static paymentsOnDays(day_of_week, amount, dateLine) {
-    // const day_of_week = 'thursday'
-    const paymentsArray = dateLine.map(date => {
-      if (moment(date).format('dddd').toLowerCase() === day_of_week) {
-        return amount
-      } else {
-        return 0
-      }
-    })
-    return paymentsArray
-  }
+	static paymentsOnDays(day_of_week, amount, dateLine) {
+     // const day_of_week = 'thursday'
+     const paymentsArray = dateLine.map(date => {
+       if (moment(date).format('dddd').toLowerCase() === day_of_week) {
+         return amount
+       } else {
+         return 0
+       }
+     })
+     return paymentsArray
+   }
 	```
 
 	* When these series are created, they are stored in two objects in state, one called paymentsInSeries (containing positive values), the other paymentsOutSeries (containing negative values).
