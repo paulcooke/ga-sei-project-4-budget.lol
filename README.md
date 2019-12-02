@@ -57,7 +57,21 @@ Whenever a transaction is created, edited or deleted, the handler that deals wit
 	* Each transaction has a recurrance - either weekly, monthly or one-off. If it's weekly it will have a day of week ("Monday" for example), if it's monthly it will have a date in month ("5" for example, max 28), or if it is one-off it will contain a date string for the date of payment
 	* A helper function maps over the newly created x-axis array and checks to see if there is a match on the day of week, date in month or payment date, whichever is relevant. If there is no match, the function will put a 0 at that index in the array it is creating, if there is a match it will put the value of the transaction at that index in the array. So for example, assuming today is Monday and we are making a 14 day array for a weekly transaction with a payment of £65 every Tuesday, it would create an array for this transaction that looks like this: `[0, 65, 0, 0, 0, 0, 0, 0, 65, 0, 0, 0, 0, 0]`
 	* An example of the helper that makes the arrays (weekly payments):
-![](readme_assets/payment_array_example.png)
+
+	```javascript
+	  static paymentsOnDays(day_of_week, amount, dateLine) {
+    // const day_of_week = 'thursday'
+    const paymentsArray = dateLine.map(date => {
+      if (moment(date).format('dddd').toLowerCase() === day_of_week) {
+        return amount
+      } else {
+        return 0
+      }
+    })
+    return paymentsArray
+  }
+	```
+
 	* When these series are created, they are stored in two objects in state, one called paymentsInSeries (containing positive values), the other paymentsOutSeries (containing negative values).
 4. Combines all the data series into one "running total" data series (also an array)
 	* Once we have our objects containing all the payment arrays, for the main graph they need combining into one payment array
