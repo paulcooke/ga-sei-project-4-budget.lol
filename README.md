@@ -60,7 +60,6 @@ Whenever a transaction is created, edited or deleted, the handler that deals wit
 
 	```javascript
 	static paymentsOnDays(day_of_week, amount, dateLine) {
-     // const day_of_week = 'thursday'
      const paymentsArray = dateLine.map(date => {
        if (moment(date).format('dddd').toLowerCase() === day_of_week) {
          return amount
@@ -79,7 +78,29 @@ Whenever a transaction is created, edited or deleted, the handler that deals wit
 	* This is done three times. Once to combine the money in, once to combine the money out, and finally to combine these two together before reducing to produce a running total. This is so that I could potential plot money in and money out separately
 	* The start value of the running total is the current balance in the account
 	* The part of the function that combines the payments in and payments out arrays into one running total array:
-	![](readme_assets/running_total_example.png)
+
+	```javascript
+	    // combine payments in array (inLine) and payments out array (outLine) into an array that can be used to make a running total
+    let changeLine
+    if (outLine.length > 0) {
+      changeLine = [inLine, outLine].reduce((r, a) => a.map((b, i) => (r[i] || 0) + b), [])
+    } else {
+      changeLine = inLine
+    }
+    
+    // add current balance to first value of changeLine
+    changeLine[0] += this.state.accounts[0].current_balance
+    console.log('changeLine test', changeLine)
+
+    const runningTotal = changeLine.reduce(function(r, a) {
+      if (r.length > 0)
+        a += Math.round(r[r.length - 1])
+      r.push(a)
+      return r
+    }, [])
+    const mainChartSettings = { ...this.state.mainChartSettings, runningTotal }
+    this.setState({ mainChartSettings })
+	```
 
 ### Wins
 * I made the choice to use Highcharts for the graph quite quickly, which meant the models and forms were set up to allow me to produce arrays in the right format for Highcharts
