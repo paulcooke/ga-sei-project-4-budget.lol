@@ -80,7 +80,7 @@ Whenever a transaction is created, edited or deleted, the handler that deals wit
 	* The part of the function that combines the payments in and payments out arrays into one running total array:
 
 	```javascript
-	 // combine payments in array (inLine) and payments out array (outLine) into an array that can be used to make a running total
+	// combine payments in array (inLine) and payments out array (outLine) into an array that can be used to make a running total
     let changeLine
     if (outLine.length > 0) {
       changeLine = [inLine, outLine].reduce((r, a) => a.map((b, i) => (r[i] || 0) + b), [])
